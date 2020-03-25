@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% load static %}
+{% block title %}
+  {{ board.name }} - {{ block.super }}
+{% endblock %}
+
+{% block stylesheet %}
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+
+    <!-- Leaflet JS -->
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+  <li class="breadcrumb-item active">{{ board.name }}</li>
+{% endblock %}
+
+{% block content %}
+<form>
+    <label for="latitude">Latitude:</label>
+    <input id="latitude" type="text"/>
+    <label for="longitude">Longitude:</label>
+    <input id="longitude" type="text"/>
+    <input id="locname" type="text"/>
+    :: or, enter your own lat-long values and <input type="button" value="Jump there"
+                                                     onClick="updateLatLng(document.getElementById('latitude').value,document.getElementById('longitude').value,1)">
+    :: <a href="#" onclick="map.zoomOut(3, {animate:true})">zoom out</a> ::
+    :: <a href="#" onclick="map.zoomIn(3, {animate:true})">zoom in</a>
+</form>
+<div id="mapid" style="height: 660px;"></div>
+  <div class="mb-4">
+    <a href="{% url 'new_topic' board.pk %}" class="btn btn-primary">New topic</a>
+  </div>
+
+  <table class="table table-striped mb-4">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Topic</th>
+        <th>Starter</th>
+        <th>Replies</th>
+        <th>Views</th>
+        <th>like</th>
+        <th>Category</th>
+        <th>Point</th>
+        <th>Last Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for topic in topics %}
+
+        {% url 'topic_posts' board.pk topic.pk as topic_url %}
+        <tr>
+          <td>
+            <p class="mb-0">
+              <a href="{{ topic_url }}">{{ topic.subject }}</a>
+            </p>
+            <small class="text-muted">
+              Pages:
+              {% for i in topic.get_page_range %}
+                <a href="{{ topic_url }}?page={{ i }}">{{ i }}</a>
+              {% endfor %}
+              {% if topic.has_many_pages %}
+              ... <a href="{{ topic_url }}?page={{ topic.get_page_count }}">Last Page</a>
+              {% endif %}
+            </small>
+          </td>
+          <td class="align-middle">{{ topic.starter.username }}</td>
+          <td class="align-middle">{{ topic.replies }}</td>
+          <td class="align-middle">{{ topic.views }}</td>
+          <td class="align-middle">{{ topic.like }}</td>
+          <td class="align-middle">{{ topic.categorynumber }}</td>
+          <td class="align-middle">{{ topic.location }}</td>
+          <td class="align-middle">{{ topic.last_updated|naturaltime }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% include 'includes/pagination.html' %}
+
+{% endblock %}
+
+{% block js %}
+<!-- map js  -->
+<script>
+    var map = L.map('mapid').setView([8, 7], 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    var planes = [];
+    {% for topic in topics %}
+    planes.push(['{{topic.subject}}', {{topic.location.y}}, {{topic.location.x}}]);
+    {% endfor %}
+    planes.push(["<a href='/'>aaaa</a>", 7,8])
+
+
+	for (var i = 0; i < planes.length; i++) {
+        marker = new L.marker([planes[i][1],planes[i][2]])
+            .bindPopup(planes[i][0])
+            .addTo(map);
+    }
+
+    L.Control.geocoder().addTo(map);
+    // cutomization
+
+    // var geocoder = L.Control.geocoder({
+    //     defaultMarkGeocode: false
+    // })
+    //     .on('markgeocode', function (e) {
+    //         var bbox = e.geocode.bbox;
+    //         var poly = L.polygon([
+    //             bbox.getSouthEast(),
+    //             bbox.getNorthEast(),
+    //             bbox.getNorthWest(),
+    //             bbox.getSouthWest()
+    //         ]).addTo(map);
+    //         map.fitBounds(poly.getBounds());
+    //     })
+    //     .addTo(map);
+
+
+    var lc = L.control.locate({
+        position: 'topleft',
+        strings: {
+            title: "Show me where I am, yo!"
+        }
+    }).addTo(map);
+
+    // curLocation = [-41.3058, 174.82082];
+
+    myIcon = L.icon({
+					iconUrl: "{% static 'images/add.png' %}", // the url of the img
+					iconSize: [40, 40],
+					iconAnchor: [20, 20] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
+				});
+
+    var rememberLat = document.getElementById('latitude').value;
+    var rememberLong = document.getElementById('longitude').value;
+    if (!rememberLat || !rememberLong) {
+        rememberLat = 8;
+        rememberLong = 7;
+    }
+
+    var marker = L.marker([rememberLat, rememberLong], {
+        draggable: true, icon:myIcon
+    }).addTo(map);
+
+    marker.on('dragend', function (e) {
+        updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+    });
+    map.on('click', function (e) {
+        marker.setLatLng(e.latlng);
+        updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+    });
+
+    function updateLatLng(lat, lng, reverse) {
+        if (reverse) {
+            marker.setLatLng([lat, lng]);
+            map.panTo([lat, lng]);
+        } else {
+            document.getElementById('latitude').value = marker.getLatLng().lat;
+            document.getElementById('longitude').value = marker.getLatLng().lng;
+            $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+marker.getLatLng().lat+'&lon='+marker.getLatLng().lng, function(data){
+                document.getElementById('locname').value = data.address.road ;
+            });
+            marker.bindPopup('I am in Baltimore.<br> Looking for Stop.')
+            marker.openPopup();
+            map.panTo([lat, lng]);
+        }
+    }
+
+
+</script>
+{% endblock %}

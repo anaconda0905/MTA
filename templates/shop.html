@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Nearby Bus stop</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+
+    <!-- Leaflet JS -->
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Load animation tweening lib requirement for CanvasFlowMapLayer -->
+    <script src="https://unpkg.com/@tweenjs/tween.js@18.5.0/dist/tween.umd.js"></script>
+    <script src="{% static 'js/CanvasFlowmapLayer.js' %}"></script>
+    <!-- Set map height -->
+    <style>
+        html, body, #container, #mapid {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body, #mapid, #container {
+            height: 460px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<h1>Nearby Stop</h1>
+{% if shops %}
+<ul>
+    {% for shop in shops %}
+    <li>
+        {{ shop.name }}: {{shop.distance}}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<form>
+    <label for="latitude">Latitude:</label>
+    <input id="latitude" type="text"/>
+    <label for="longitude">Longitude:</label>
+    <input id="longitude" type="text"/>
+    <input id="locname" type="text"/>
+    :: or, enter your own lat-long values and <input type="button" value="Jump there"
+                                                     onClick="updateLatLng(document.getElementById('latitude').value,document.getElementById('longitude').value,1)">
+    :: <a href="#" onclick="map.zoomOut(3, {animate:true})">zoom out</a> ::
+    :: <a href="#" onclick="map.zoomIn(3, {animate:true})">zoom in</a>
+</form>
+<div id="mapid"></div>
+
+<!-- map js  -->
+<script>
+    var map = L.map('mapid').setView([-41.3058, 174.82082], 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+
+	var planes = [
+		["7C6B07",-40.99497,174.50808],
+		["7C6B38",-41.30269,173.63696],
+		["7C6CA1",-41.49413,173.5421],
+		["7C6CA2",-40.98585,174.50659],
+		["C81D9D",-40.93163,173.81726],
+		["C82009",-41.5183,174.78081],
+		["C82081",-41.42079,173.5783],
+		["C820AB",-42.08414,173.96632],
+		["C820B6",-41.51285,173.53274]
+    ];
+	for (var i = 0; i < planes.length; i++) {
+        marker = new L.marker([planes[i][1],planes[i][2]])
+            .bindPopup(planes[i][0])
+            .addTo(map);
+    }
+
+    L.Control.geocoder().addTo(map);
+    // cutomization
+
+    // var geocoder = L.Control.geocoder({
+    //     defaultMarkGeocode: false
+    // })
+    //     .on('markgeocode', function (e) {
+    //         var bbox = e.geocode.bbox;
+    //         var poly = L.polygon([
+    //             bbox.getSouthEast(),
+    //             bbox.getNorthEast(),
+    //             bbox.getNorthWest(),
+    //             bbox.getSouthWest()
+    //         ]).addTo(map);
+    //         map.fitBounds(poly.getBounds());
+    //     })
+    //     .addTo(map);
+
+var geoJsonFeatureCollection = {
+  // collection of GeoJSON point features
+  // with origin and destination attribute properties
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates":[-41.3058, 174.82082]
+  },
+  "properties": {
+    "origin_id": 238,
+    "origin_city": "Hechi",
+    "origin_country": "China",
+    "origin_lon": -41.3058,
+    "origin_lat": 174.82082,
+    "destination_id": 1,
+    "destination_city": "Sarh",
+    "destination_country": "Chad",
+    "destination_lon": -34.3058,
+    "destination_lat": 171.82082
+  }
+  // see discussion above, demos, and CSV example data sources
+};
+
+var exampleFlowmapLayer = L.canvasFlowmapLayer(geoJsonFeatureCollection, {
+  // required property for this custom layer,
+  // which relies on the property names of your own data
+  originAndDestinationFieldIds: {
+    // all kinds of important stuff here...see docs below
+ originUniqueIdField: '238',
+  originGeometry: {
+    x: -41.3058,
+    y: 174.82082,
+    spatialReference: {
+      wkid: 4326
+    }
+  },
+  destinationUniqueIdField: '1',
+  destinationGeometry: {
+    x: -31.3058,
+    y: 170.82082,
+    spatialReference: {
+      wkid: 4326
+    }
+  }
+    // however, this isn't required if your own data
+    // is in the same format as the layer source code
+  },
+
+  // some custom options
+  pathDisplayMode: 'selection',
+  animationStarted: true,
+  animationEasingFamily: 'Cubic',
+  animationEasingType: 'In',
+  animationDuration: 2000
+}).addTo(map);
+
+
+    var lc = L.control.locate({
+        position: 'topleft',
+        strings: {
+            title: "Show me where I am, yo!"
+        }
+    }).addTo(map);
+
+    // curLocation = [-41.3058, 174.82082];
+
+    myIcon = L.icon({
+					iconUrl: "{% static 'images/add.png' %}", // the url of the img
+					iconSize: [40, 40],
+					iconAnchor: [20, 20] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
+				});
+
+    var rememberLat = document.getElementById('latitude').value;
+    var rememberLong = document.getElementById('longitude').value;
+    if (!rememberLat || !rememberLong) {
+        rememberLat = -41.3058;
+        rememberLong = 174.82082;
+    }
+
+    var marker = L.marker([rememberLat, rememberLong], {
+        draggable: true, icon:myIcon
+    }).addTo(map);
+    marker.on('dragend', function (e) {
+        updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+    });
+    map.on('click', function (e) {
+        marker.setLatLng(e.latlng);
+        updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+    });
+
+    function updateLatLng(lat, lng, reverse) {
+        if (reverse) {
+            marker.setLatLng([lat, lng]);
+            map.panTo([lat, lng]);
+        } else {
+            document.getElementById('latitude').value = marker.getLatLng().lat;
+            document.getElementById('longitude').value = marker.getLatLng().lng;
+            $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+marker.getLatLng().lat+'&lon='+marker.getLatLng().lng, function(data){
+                document.getElementById('locname').value = data.address.road ;
+            });
+            marker.bindPopup('I am in Baltimore.<br> Looking for Stop.')
+            marker.openPopup();
+            map.panTo([lat, lng]);
+        }
+    }
+
+
+
+    // var marker = new L.marker(curLocation, {draggable:'true', icon: myIcon}).addTo(map)
+    //     .bindPopup('I am in Baltimore.<br> Looking for Stop.')
+    //     .openPopup();
+
+    // map.on('click',
+    //   function mapClickListen(e) {
+    //     var pos = e.latlng;
+    //     console.log('map click event');
+    //     var marker = L.marker(
+    //       pos, {
+    //         draggable: true
+    //       }
+    //     );
+    //     marker.on('drag', function(e) {
+    //       console.log('marker drag event');
+    //     });
+    //     marker.on('dragstart', function(e) {
+    //       console.log('marker dragstart event');
+    //       map.off('click', mapClickListen);
+    //     });
+    //     marker.on('dragend', function(e) {
+    //       console.log('marker dragend event');
+    //       setTimeout(function() {
+    //         map.on('click', mapClickListen);
+    //       }, 10);
+    //     });
+    //     marker.addTo(map);
+    //   }
+    // );
+
+
+    {% for shop in shops %}
+    var circle = L.circle([{{shop.location.y}}, {{shop.location.x}}],{color: 'red', fillColor:'#f03', fillOpacity:0.5, radius:5}).addTo(map);
+    {% endfor %}
+
+</script>
+</body>
+</html>
+
+

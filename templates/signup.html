@@ -1,0 +1,152 @@
+{% extends 'base_accounts.html' %}
+
+{% block title %}Sign up to MassTransit Advisor{% endblock %}
+
+{% block content %}
+
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        <form class="login100-form validate-form" method="post" novalidate>
+            {% csrf_token %}
+            <span class="login100-form-title p-b-49">
+                Create Account
+            </span>
+            <div class="wrap-input100 validate-input" data-validate="Username is required">
+                <span for="{{ form.username.id_for_label }}" class="label-input100">YOUR NAME</span>
+                <input type="text"
+                       name="{{ form.username.name }}"
+                       id="{{ form.username.id_for_label }}"
+                       class="input100"
+                       placeholder="Type your username"
+                       {% if form.username.value != None %}value="{{ form.username.value|stringformat:'s' }}"{% endif %}
+                       maxlength="{{ form.username.field.max_length }}"
+                       {% if form.username.field.required %}required{% endif %}>
+                <span class="focus-input100" data-symbol="&#xf206;"></span>
+            </div>
+
+            {% for error in form.username.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error!</strong>
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <br>
+
+            <div class="wrap-input100 validate-input" data-validate="Username is required">
+                <span for="{{ form.email.id_for_label }}" class="label-input100">EMAIL</span>
+                <input type="email"
+                       name="{{ form.email.name }}"
+                       id="{{ form.email.id_for_label }}"
+                       class="input100"
+                       placeholder="Type your email"
+                       {% if form.email.value != None %}value="{{ form.email.value|stringformat:'s' }}"{% endif %}
+                       maxlength="{{ form.email.field.max_length }}"
+                       {% if form.email.field.required %}required{% endif %}>
+                <span class="focus-input100" data-symbol="&#xf15a;"></span>
+
+            </div>
+
+            {% for error in form.email.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error!</strong>
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <br>
+
+            <div class="wrap-input100 validate-input" data-validate="This field is required">
+                <span for="{{ form.password1.id_for_label }}" class="label-input100">PASSWORD</span>
+                <input type="password"
+                       name="{{ form.password1.name }}"
+                       id="{{ form.password1.id_for_label }}"
+                       class="input100"
+                       placeholder="Type your password"
+                       {% if form.password1.value != None %}value="{{ form.password1.value|stringformat:'s' }}"{% endif %}
+                       maxlength="{{ form.password1.field.max_length }}"
+                       {% if form.password1.field.required %}required{% endif %}>
+                <span class="focus-input100" data-symbol="&#xf190;"></span>
+
+            </div>
+
+            {% for error in form.password1.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error!</strong>
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <br>
+            <div class="wrap-input100 validate-input" data-validate="This field is required">
+                <span for="{{ form.password2.id_for_label }}"
+                      class="label-input100">PASSWORD CONFIRMATION</span>
+                <input type="password"
+                       name="{{ form.password2.name }}"
+                       id="{{ form.password2.id_for_label }}"
+                       class="input100"
+                       placeholder="Type your password again"
+                       {% if form.password2.value != None %}value="{{ form.password2.value|stringformat:'s' }}"{% endif %}
+                       maxlength="{{ form.password2.field.max_length }}"
+                       {% if form.password2.field.required %}required{% endif %}>
+                <span class="focus-input100" data-symbol="&#xf190;"></span>
+
+            </div>
+
+            {% for error in form.password2.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error!</strong>
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <br>
+
+            <div class="wrap-input100 validate-input" data-validate="This field is required">
+                <span for="{{ form.phone.id_for_label }}"
+                      class="label-input100">MOBILE NO.</span>
+                <input type="text"
+                       name="{{ form.phone.name }}"
+                       id="{{ form.phone.id_for_label }}"
+                       class="input100"
+                       placeholder="Type your Mobile No. (xxx)xxx-xxxx"
+                       {% if form.phone.value != None %}value="{{ form.phone.value|stringformat:'s' }}"{% endif %}
+                       maxlength="{{ form.phone.field.max_length }}"
+                       {% if form.phone.field.required %}required{% endif %}>
+                <span class="focus-input100" data-symbol="&#xf2c8;"></span>
+
+            </div>
+
+            {% for error in form.phone.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error!</strong>
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <br>
+
+            <div>
+                <label>
+                    <input type="checkbox" value="true" name="check_policy">
+                    <i> </i> <span>By clicking Sign Up you agree to Terms & Privacy Policy</span>
+                </label>
+            </div>
+
+            {% if check_policy %}
+                <div class="alert alert-danger">
+                    <strong>Error!</strong>
+                    This field is required.
+                </div>
+            {% endif %}
+
+            <div class="container-login100-form-btn">
+                <div class="wrap-login100-form-btn">
+                    <button type="submit" class="sign-in-btn">
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+
+            <div class="txt1 text-center p-t-10">
+                <span>Already have an account?</span>
+                <a href="{% url 'login' %}">Sign In Here!</a>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Start a New Topic{% endblock %}
+
+{% block stylesheet %}
+
+<!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+
+    <!-- Leaflet JS -->
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a></li>
+  <li class="breadcrumb-item active">New topic</li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row1 ww-map-wrapper">
+        <div class="col-lg-8 col-md-8 col-12  top-wrapper1" id = "mapid">
+
+        </div>
+        <div class="col-lg-4 col-md-4 col-12 top-wrapper2">
+
+            <h1 class="card-title">Bus: Incident Info</h1>
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="locname">Address:</label><input id="locname" class="form-control" type="text"/>
+                </div>
+                <div class="form-group">
+                    <label>Cleanliness:</label><br>
+                        <select class="wide form-control">
+                            <option data-display="Select">Nothing</option>
+                            <option value="1">Just nice and clean</option>
+                            <option value="2">Make sure the driver clean up before every trip</option>
+                        </select>
+                </div>
+
+                {% include 'includes/form.html' %}
+                <button type="submit" class="btn btn-success">Request for Audit /Investigate</button>
+
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+    var map = L.map('mapid').setView([-41.3058, 174.82082], 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+
+	var planes = [
+		["7C6B07",-40.99497,174.50808],
+		["7C6B38",-41.30269,173.63696],
+		["7C6CA1",-41.49413,173.5421],
+		["7C6CA2",-40.98585,174.50659],
+		["C81D9D",-40.93163,173.81726],
+		["C82009",-41.5183,174.78081],
+		["C82081",-41.42079,173.5783],
+		["C820AB",-42.08414,173.96632],
+		["C820B6",-41.51285,173.53274]
+    ];
+	myIcon = L.icon({
+					iconUrl: "{% static 'images/bus-logo.png' %}", // the url of the img
+					iconSize: [40, 40],
+					iconAnchor: [20, 40] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
+				});
+	for (var i = 0; i < planes.length; i++) {
+        marker = new L.marker([planes[i][1],planes[i][2]], {icon:myIcon})
+            .bindPopup(planes[i][0])
+            .addTo(map);
+    }
+
+    L.Control.geocoder().addTo(map);
+
+    var lc = L.control.locate({
+        position: 'topleft',
+        strings: {
+            title: "Show me where I am, yo!"
+        }
+    }).addTo(map);
+
+    // curLocation = [-41.3058, 174.82082];
+
+
+
+    var rememberLat;
+    var rememberLong;
+    if (!rememberLat || !rememberLong) {
+        rememberLat = -41.3058;
+        rememberLong = 174.82082;
+    }
+
+    var marker = L.marker([rememberLat, rememberLong], {
+        draggable: true,
+    }).addTo(map);
+    marker.on('dragend', function (e) {
+        updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+    });
+    map.on('click', function (e) {
+        marker.setLatLng(e.latlng);
+        updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+    });
+
+    function updateLatLng(lat, lng, reverse) {
+        if (reverse) {
+            marker.setLatLng([lat, lng]);
+            map.panTo([lat, lng]);
+        } else {
+            $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+marker.getLatLng().lat+'&lon='+marker.getLatLng().lng, function(data){
+                document.getElementById('locname').value = data.address.road ;
+            });
+            marker.bindPopup('You are here:)')
+            marker.openPopup();
+            map.panTo([lat, lng]);
+        }
+    }
+
+</script>
+{% endblock js %}

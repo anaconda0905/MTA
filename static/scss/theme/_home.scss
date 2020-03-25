@@ -1,0 +1,263 @@
+//--------- Start Banner Area -------------//
+.banner-area {
+    background: url(../img/banner-bg.jpg) no-repeat center;
+    background-size: cover;
+    .primary-btn {
+        color:$primary-color !important;
+        background-color: $white;
+        font-size: 30px;
+        padding: 15px 30px;
+        font-weight: 700;
+        font-family: open-sans sans-serif;
+        &:hover{
+            color: $white !important;
+            background-color: $primary-color;
+        }
+    }
+    .fullscreen {
+        @media (max-width: 420px) {
+            height: 200px !important;
+            padding-bottom: 40px;
+            align-items: flex-end !important;
+        }
+        @media (min-width: 420px) and (max-width: 991px) {
+            height: 500px !important;
+        }
+    }
+    .profilescreen {
+        height: 75px;
+    }
+    .review-step-1 {
+        height: 75px;   
+    }
+}
+
+.banner-content {
+    h1 {
+        color: $white;
+        font-size: 60px;
+        font-weight: 300;
+        line-height: 72px;
+        br {
+            @include media-breakpoint-down(md) {
+                display: none;
+            }
+        }
+        @include media-breakpoint-down(md) {
+            font-size: 40px;
+            line-height: 52px;
+        }
+        @media (max-width: 767px) {
+            margin-top: 50px;
+            font-size: 30px;
+            line-height: 42px;
+        }
+    }
+}
+
+//--------- End Banner Area -------------//
+//--------- Start Post Slider Area -------------//
+.post-slider-area {
+    margin-top: -40px;
+    @media (max-width: 991px) {
+        margin-top: 0;
+        padding-top: 20px;
+    }
+}
+
+.post-box {
+    padding: 20px 40px 10px 40px;
+    // box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05);
+    position: relative;
+    background: $white;
+    border-radius: 5px;
+    @media (max-width: 568px) {
+        padding: 15px 10px;
+    }
+    p {
+        margin-top: 5px;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        max-width: 635px;
+        @media (max-width: 568px) {
+            // text-align: center;
+            display: none;
+        }
+    }
+
+    .post-meta {
+        margin: 0px 0px 20px 20px;
+    }
+    .meta-head {
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+        a {
+            color: $black;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+    .meta-details {
+        ul {
+            li {
+                display: inline-block;
+                margin-right: 20px;
+                a {
+                    color: #888888;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    span {
+                        margin-right: 5px;
+                    }
+                    &:hover {
+                        color: $primary-color;
+                    }
+                }
+            }
+        }
+    }
+    .post-btn {
+        text-align: right;
+        position: absolute;
+        top: 50%;
+        right: 40px;
+        @include transform(translateY(-50%));
+        @media (max-width: 991px) {
+            position: relative;
+            text-align: left;
+            top: 35px;
+            right: 0px;
+        }
+    }
+}
+
+//--------- Start Post Slider Area -------------//
+//--------- Start Post Area -------------//
+.single-post-item {
+    position: relative;
+    
+    .post-header{
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 40px;
+        background: rgba(150, 0, 179, 0.5);
+        border-radius: 10px 10px 0 0;
+        padding: 10px 20px;
+
+        .nick-name{
+            border-radius: 50%;
+            background-color: #9700b2;
+            padding: 1px 5px;
+            margin-top: -1px;
+        }
+
+        label{
+            color: $white;
+        }
+    }
+
+    .post-footer{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding:0px 20px;
+
+        label{
+            color:$black;
+        }
+        &:nth-child(2){
+            margin-top: 5px;
+        }
+    }
+
+    &.short {
+        @media (max-width: 991px) {
+            margin-left: 0px;
+        }
+        h3 {
+            font-size: 18px;
+        }
+        .post-box {
+            left: -25px;
+            @media (max-width: 991px) {
+                left: 0;
+            }
+        }
+    }
+    @media (max-width: 991px) {
+        margin-left: 0;
+    }
+    figure {
+        overflow: hidden;
+    }
+    .post-img {
+        border-radius: 10px 10px 0 0;
+        // @include transition();
+    }
+    h3 {
+        margin: 25px 0px 15px;
+        a {
+            color: $black;
+        }
+    }
+    .post-box {
+        width: 100%;
+        position: absolute;
+        left: -70px;
+        top: 40%;
+        padding: 19px;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+        @media (max-width: 1024px) {
+            top: 20%;
+        }
+        @media (max-width: 991px) {
+            margin-top: 5px;
+            position: relative;
+            left: 0;
+            box-shadow: none;
+            padding-left: 0;
+        }
+        .post-meta {
+            margin-bottom: 0;
+        }
+    }
+    &:hover {
+        .post-img {
+            // @include transform(scale(1.3));
+        }
+        h3 {
+            a {
+                color: $primary-color;
+            }
+        }
+        .primary-btn {
+            background: $primary-color;
+            color: $white;
+        }
+    }
+}
+
+//--------- Start Post Area -------------//
+//----------- Start Generic Page -------------//
+.whole-wrap {
+    background-color: $white;
+}
+
+.section-top-border {
+    padding: 50px 0;
+    border-top: 1px dotted #eee;
+}
+
+.switch-wrap {
+    margin-bottom: 10px;
+    p {
+        margin: 0;
+    }
+}
+
+// -------------profile screen---------------
+//----------- End Generic Page -------------//

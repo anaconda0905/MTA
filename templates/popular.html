@@ -1,0 +1,418 @@
+{% extends 'base_pages.html' %}
+{% load static %}
+{% block title %}Popular{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    {% block css %}
+    {% endblock css %}
+{% endblock %}
+
+{% block content %}
+	<!-- Start main body Area -->
+	<div id="popular_section" class="main-body section-gap">
+		<div class="container box_1170">
+			<div class="tabs">
+				<input type="radio" id="tab1" name="tab-control" checked>
+				<input type="radio" id="tab2" name="tab-control">
+				<input type="radio" id="tab3" name="tab-control">
+				<ul class="navigation-bar">
+					<li title="Features">
+						<label for="tab1" role="button">
+							<svg class="bi bi-plus-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z" clip-rule="evenodd"></path>
+								<path fill-rule="evenodd" d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z" clip-rule="evenodd"></path>
+								<path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"></path>
+							</svg><br><span>Follow</span>
+						</label>
+					</li>
+					<li title="Delivery Contents">
+						<label for="tab2" role="button">
+							<svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"></path>
+								<path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"></path>
+							</svg><br><span>Explore</span>
+						</label>
+					</li>
+					<li title="Shipping">
+						<label for="tab3" role="button">
+							<svg viewBox="0 0 24 24">
+								<path d="M3,4A2,2 0 0,0 1,6V17H3A3,3 0 0,0 6,20A3,3 0 0,0 9,17H15A3,3 0 0,0 18,20A3,3 0 0,0 21,17H23V12L20,8H17V4M10,6L14,10L10,14V11H4V9H10M17,9.5H19.5L21.47,12H17M6,15.5A1.5,1.5 0 0,1 7.5,17A1.5,1.5 0 0,1 6,18.5A1.5,1.5 0 0,1 4.5,17A1.5,1.5 0 0,1 6,15.5M18,15.5A1.5,1.5 0 0,1 19.5,17A1.5,1.5 0 0,1 18,18.5A1.5,1.5 0 0,1 16.5,17A1.5,1.5 0 0,1 18,15.5Z" />
+							</svg><br><span>Nearby</span>
+						</label>
+					</li>
+				</ul>
+
+				<div class="slider"><div class="indicator"></div></div>
+				<div class="content">
+					<section>
+						<h2>Follow</h2>
+						<div class="single-widget search-widget">
+							<form class="example" action="#" style="margin:auto;max-width:300px">
+								<button type="submit"><i class="fa fa-search"></i></button>
+								<input type="text" placeholder="Search Posts" name="search2">
+							</form>
+						</div>
+						<div class="filter-wrapper">
+							<ul class="d-flex flex-row align-items-center justify-content-between">
+								<li><a href="#" class="genric-btn primary circle filter-btn" style="width: 120px !important;">Bus</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Stop</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Driver</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Fare</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Operator</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Route</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Safety</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Other</a></li>
+							</ul>
+						</div>
+
+						<div class="filter-header">
+							<select name="sources" id="filter" class="sortby-select-box sources" placeholder="Sort by">
+								<option class="happyfeeling" value="Happy to Angry">Happy to Angry</option>
+								<option class="happyfeeling" value="Angry to Happy">Angry to Happy</option>
+								<option value="Highest to Lowest reviews">Highest to Lowest reviews</option>
+								<option value="Lowest to Highest reviews">Lowest to Highest reviews</option>
+							</select>
+							<a href="#" class="popular_createreview">
+								<img src="{% static 'img/create_review.png' %}">
+								<span>Create A Review</span>
+							</a>
+							<select name="sources" id="view" class="viewby-select-box sources" placeholder="View by">
+								<option value="1">Map</option>
+								<option value="2">Post</option>
+								<option value="3">All</option>
+							</select>
+						</div>
+
+						<div class="filter-content">
+							<ul class="row d-flex flex-wrap map-wrapper">
+								<li class="col-12 col-sm-12 col-md-6 col-lg-4 col-xs-4">
+									<div class="single-post-item short">
+										<div class="post-header justify-content-between d-flex flex-row">
+											<div>
+												<label class="nick-name">AL</label>
+												<label>@username</label>
+											</div>
+											<label>2h</label>
+										</div>
+										<figure>
+											<img class="post-img img-fluid" src="{% static 'img/map-1.png' %}" alt="">
+										</figure>
+										<div class="post-footer">
+											<div class="justify-content-between d-flex flex-row">
+												<div>
+													<img src="{% static 'img/icons-emoji-happy.png' %}" style="max-height: 20px;" />
+													<label><span style="font-weight: bold;">Bus</span> / Driver</label>
+												</div>
+												<label>30 Reviews</label>
+											</div>
+											<div class="justify-content-between d-flex flex-row">
+												<label>Driving Behavior</label>
+												<div>
+													<img src="{% static 'img/icons-likebutton-after.png' %}" style="max-height: 20px;"/>
+													<label>1.3k</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li class="col-12 col-sm-12 col-md-6 col-lg-4 col-xs-4">
+									<div class="single-post-item short">
+										<div class="post-header justify-content-between d-flex flex-row">
+											<div>
+												<label class="nick-name">AL</label>
+												<label>@username</label>
+											</div>
+											<label>2h</label>
+										</div>
+										<figure>
+											<img class="post-img img-fluid" src="{% static 'img/map-1.png' %}" alt="">
+										</figure>
+										<div class="post-footer">
+											<div class="justify-content-between d-flex flex-row">
+												<div>
+													<img src="{% static 'img/icons-emoji-happy.png' %}" style="max-height: 20px;" />
+													<label><span style="font-weight: bold;">Bus</span> / Driver</label>
+												</div>
+												<label>30 Reviews</label>
+											</div>
+											<div class="justify-content-between d-flex flex-row">
+												<label>Driving Behavior</label>
+												<div>
+													<img src="{% static 'img/icons-likebutton-after.png' %}" style="max-height: 20px;"/>
+													<label>1.3k</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li class="col-12 col-sm-12 col-md-6 col-lg-4 col-xs-4">
+									<div class="single-post-item short">
+										<div class="post-header justify-content-between d-flex flex-row">
+											<div>
+												<label class="nick-name">AL</label>
+												<label>@username</label>
+											</div>
+											<label>2h</label>
+										</div>
+										<figure>
+											<img class="post-img img-fluid" src="{% static 'img/map-1.png' %}" alt="">
+										</figure>
+										<div class="post-footer">
+											<div class="justify-content-between d-flex flex-row">
+												<div>
+													<img src="{% static 'img/icons-emoji-happy.png' %}" style="max-height: 20px;" />
+													<label><span style="font-weight: bold;">Bus</span> / Driver</label>
+												</div>
+												<label>30 Reviews</label>
+											</div>
+											<div class="justify-content-between d-flex flex-row">
+												<label>Driving Behavior</label>
+												<div>
+													<img src="{% static 'img/icons-likebutton-after.png' %}" style="max-height: 20px;"/>
+													<label>1.3k</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li class="col-12 col-sm-12 col-md-6 col-lg-4 col-xs-4">
+									<div class="single-post-item short">
+										<div class="post-header justify-content-between d-flex flex-row">
+											<div>
+												<label class="nick-name">AL</label>
+												<label>@username</label>
+											</div>
+											<label>2h</label>
+										</div>
+										<figure>
+											<img class="post-img img-fluid" src="{% static 'img/map-1.png' %}" alt="">
+										</figure>
+										<div class="post-footer">
+											<div class="justify-content-between d-flex flex-row">
+												<div>
+													<img src="{% static 'img/icons-emoji-happy.png' %}" style="max-height: 20px;" />
+													<label><span style="font-weight: bold;">Bus</span> / Driver</label>
+												</div>
+												<label>30 Reviews</label>
+											</div>
+											<div class="justify-content-between d-flex flex-row">
+												<label>Driving Behavior</label>
+												<div>
+													<img src="{% static 'img/icons-likebutton-after.png' %}" style="max-height: 20px;"/>
+													<label>1.3k</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li class="col-12 col-sm-12 col-md-6 col-lg-4 col-xs-4">
+									<div class="single-post-item short">
+										<div class="post-header justify-content-between d-flex flex-row">
+											<div>
+												<label class="nick-name">AL</label>
+												<label>@username</label>
+											</div>
+											<label>2h</label>
+										</div>
+										<figure>
+											<img class="post-img img-fluid" src="{% static 'img/map-1.png' %}" alt="">
+										</figure>
+										<div class="post-footer">
+											<div class="justify-content-between d-flex flex-row">
+												<div>
+													<img src="{% static 'img/icons-emoji-happy.png' %}" style="max-height: 20px;" />
+													<label><span style="font-weight: bold;">Bus</span> / Driver</label>
+												</div>
+												<label>30 Reviews</label>
+											</div>
+											<div class="justify-content-between d-flex flex-row">
+												<label>Driving Behavior</label>
+												<div>
+													<img src="{% static 'img/icons-likebutton-after.png' %}" style="max-height: 20px;"/>
+													<label>1.3k</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+
+					</section>
+					<section>
+						<h2>Explore</h2>
+						<div class="single-widget search-widget">
+							<form class="example" action="#" style="margin:auto;max-width:300px">
+								<button type="submit"><i class="fa fa-search"></i></button>
+								<input type="text" placeholder="Search Posts" name="search2">
+							</form>
+						</div>
+						<div class="filter-wrapper">
+							<ul class="d-flex flex-row align-items-center justify-content-between">
+								<li><a href="#" class="genric-btn primary circle filter-btn" style="width: 120px !important;">Bus</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Stop</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Driver</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Fare</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Operator</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Route</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Safety</a></li>
+								<li><a href="#" class="genric-btn primary circle  filter-btn" style="width: 120px !important;">Other</a></li>
+							</ul>
+						</div>
+
+						<div class="filter-header">
+                            <select name="sources" id="filter" class="sortby-select-box sources" placeholder="Sort by">
+								<option class="happyfeeling" value="Happy to Angry">Happy to Angry</option>
+								<option class="happyfeeling" value="Angry to Happy">Angry to Happy</option>
+								<option value="Highest to Lowest reviews">Highest to Lowest reviews</option>
+								<option value="Lowest to Highest reviews">Lowest to Highest reviews</option>
+							</select>
+							<a href="#" class="popular_createreview">
+								<img src="{% static 'img/create_review.png' %}">
+								<span>Create A Review</span>
+							</a>
+							<select name="sources" id="view" class="viewby-select-box sources" placeholder="View by">
+								<option value="1">Map</option>
+								<option value="2">Post</option>
+								<option value="3">All</option>
+							</select>
+						</div>
+
+						<div class="filter-content">
+							<ul class="responsive-table">
+							    <li class="table-header">
+							      <div class="bs-col bs-col-1">Time</div>
+							      <div class="bs-col bs-col-2">Reviews</div>
+							      <div class="bs-col bs-col-3"></div>
+							      <div class="bs-col bs-col-1">Map</div>
+							      <div class="bs-col bs-col-1">Media</div>
+							      <div class="bs-col bs-col-1">Info</div>
+							    </li>
+							    <li class="table-row">
+							      <div class="bs-col bs-col-1 bs-fz-18" data-label="Time">2h</div>
+							      <div class="bs-col bs-col-2 bs-fz-14" data-label="Reviews">30 Reviews</div>
+							      <div class="bs-col bs-col-3 feeling-wrapper" data-label="Topic">
+
+							      	 <img src="{% static 'img/happy.png' %}" class="feeling-img">
+							      	 <label class="bs-fz-18"><span class="bs-fz-bold-18">Stage Bus&nbsp;</span>/&nbsp;Driver</label>
+							      	 <label class="bs-fz-18">&nbsp;&nbsp;&nbsp;Driving Behaviour</label>
+
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Map">
+							      	<img src="{% static 'img/happy.png' %}" class="map-img">
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Photo/Video">
+							      	<img src="{% static 'img/happy.png' %}" class="photo-img">
+							      </div>
+							      <div class="bs-col bs-col-1 bs-fz-14" data-label="Info">Info</div>
+							    </li>
+							    <li class="table-row">
+							      <div class="bs-col bs-col-1 bs-fz-18" data-label="Time">2h</div>
+							      <div class="bs-col bs-col-2 bs-fz-14" data-label="Reviews">30 Reviews</div>
+							      <div class="bs-col bs-col-3 feeling-wrapper" data-label="Topic">
+
+							      	 <img src="{% static 'img/happy.png' %}" class="feeling-img">
+							      	 <label class="bs-fz-18"><span class="bs-fz-bold-18">Stage Bus&nbsp;</span>/&nbsp;Driver</label>
+							      	 <label class="bs-fz-18">&nbsp;&nbsp;&nbsp;Driving Behaviour</label>
+
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Map">
+							      	<img src="{% static 'img/happy.png' %}" class="map-img">
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Photo/Video">
+							      	<img src="{% static 'img/happy.png' %}" class="photo-img">
+							      </div>
+							      <div class="bs-col bs-col-1 bs-fz-14" data-label="Info">Info</div>
+							    </li>
+							    <li class="table-row">
+							      <div class="bs-col bs-col-1 bs-fz-18" data-label="Time">2h</div>
+							      <div class="bs-col bs-col-2 bs-fz-14" data-label="Reviews">30 Reviews</div>
+							      <div class="bs-col bs-col-3 feeling-wrapper" data-label="Topic">
+
+							      	 <img src="{% static 'img/happy.png' %}" class="feeling-img">
+							      	 <label class="bs-fz-18"><span class="bs-fz-bold-18">Stage Bus&nbsp;</span>/&nbsp;Driver</label>
+							      	 <label class="bs-fz-18">&nbsp;&nbsp;&nbsp;Driving Behaviour</label>
+
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Map">
+							      	<img src="{% static 'img/happy.png' %}" class="map-img">
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Photo/Video">
+							      	<img src="{% static 'img/happy.png' %}" class="photo-img">
+							      </div>
+							      <div class="bs-col bs-col-1 bs-fz-14" data-label="Info">Info</div>
+							    </li>
+							    <li class="table-row">
+							      <div class="bs-col bs-col-1 bs-fz-18" data-label="Time">2h</div>
+							      <div class="bs-col bs-col-2 bs-fz-14" data-label="Reviews">30 Reviews</div>
+							      <div class="bs-col bs-col-3 feeling-wrapper" data-label="Topic">
+
+							      	 <img src="{% static 'img/happy.png' %}" class="feeling-img">
+							      	 <label class="bs-fz-18"><span class="bs-fz-bold-18">Stage Bus&nbsp;</span>/&nbsp;Driver</label>
+							      	 <label class="bs-fz-18">&nbsp;&nbsp;&nbsp;Driving Behaviour</label>
+
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Map">
+							      	<img src="{% static 'img/happy.png' %}" class="map-img">
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Photo/Video">
+							      	<img src="{% static 'img/happy.png' %}" class="photo-img">
+							      </div>
+							      <div class="bs-col bs-col-1 bs-fz-14" data-label="Info">Info</div>
+							    </li>
+							    <li class="table-row">
+							      <div class="bs-col bs-col-1 bs-fz-18" data-label="Time">2h</div>
+							      <div class="bs-col bs-col-2 bs-fz-14" data-label="Reviews">30 Reviews</div>
+							      <div class="bs-col bs-col-3 feeling-wrapper" data-label="Topic">
+
+							      	 <img src="{% static 'img/happy.png' %}" class="feeling-img">
+							      	 <label class="bs-fz-18"><span class="bs-fz-bold-18">Stage Bus&nbsp;</span>/&nbsp;Driver</label>
+							      	 <label class="bs-fz-18">&nbsp;&nbsp;&nbsp;Driving Behaviour</label>
+
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Map">
+							      	<img src="{% static 'img/happy.png' %}" class="map-img">
+							      </div>
+							      <div class="bs-col bs-col-1" data-label="Photo/Video">
+							      	<img src="{% static 'img/happy.png' %}" class="photo-img">
+							      </div>
+							      <div class="bs-col bs-col-1 bs-fz-14" data-label="Info">Info</div>
+							    </li>
+							  </ul>
+						</div>
+					</section>
+					<section>
+						<h2>Nearby</h2>
+						<div class="single-widget search-widget">
+							<form class="example" action="#" style="margin:auto;max-width:300px">
+								<button type="submit"><i class="fa fa-search"></i></button>
+								<input type="text" placeholder="Search Posts" name="search2">
+							</form>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Start main body Area -->
+
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/superfish.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/jquery.steps.js' %}"></script>
+    <script src="{% static 'js/header-scrolled.js' %}"></script>
+    <script src="{% static 'js/popular.js' %}"></script>
+{% endblock js %}

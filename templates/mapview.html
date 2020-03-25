@@ -1,0 +1,157 @@
+
+{% extends 'base_pages.html' %}
+{% load static %}
+{% load humanize %}
+{% load gravatar %}
+{% block title %}Map view{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+    <!-- Leaflet JS -->
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>var myvar = "{{ topicdatas }}";</script>
+    {% block css %}
+        <style>
+        .mapview {
+            left: 50%;
+            transform: translateX(-50%);
+            position: relative;
+            background: white;
+            width: 100%;
+            margin-top: 35px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            border-radius: 5px;
+            min-width: 180px;
+        }
+        </style>
+
+    {% endblock css %}
+{% endblock %}
+
+{% block content %}
+	<!-- Start main body Area -->
+	<div id="popular_section" class="main-body section-gap">
+		<div class="container box_1170">
+			<div class="mapview">
+                <div id="googleMap" style="height: 530px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- Start main body Area -->
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/superfish.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/jquery.steps.js' %}"></script>
+    <script src="{% static 'js/header-scrolled.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+
+        var map = L.map('googleMap', {
+            center: L.latLng(3.141916, 101.6867),
+            zoom: 16
+        });
+        map.invalidateSize();
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18
+        }).addTo(map);
+        L.Control.geocoder().addTo(map);
+        var lc = L.control.locate({
+            position: 'topleft',
+            strings: {
+                title: "Show me where I am, yo!"
+            }
+        }).addTo(map);
+        myIcon = L.icon({
+					iconUrl: "{% static 'images/bus-logo.png' %}", // the url of the img
+					iconSize: [40, 40],
+					iconAnchor: [20, 20] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
+				});
+        var newmarker;
+        {% for topic_data in topicdatas %}
+            {% if topic_data.subcategory == 'Safety' %}
+                myIcon = L.icon({
+					iconUrl: "{% static 'images/safety.png' %}", // the url of the img
+					iconSize: [40, 40],
+					iconAnchor: [20, 40] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
+				});
+            {% endif %}
+        newmarker = new L.marker([{{ topic_data.location.y }}, {{ topic_data.location.x }}],{
+            data:'{{ topic_data.id }}',
+            icon: myIcon,
+        }).on('click', markerOnClick)
+            .addTo(map);
+        {% endfor %}
+        
+        function markerOnClick(e) {
+            myvar = this.options.data;
+
+            $.ajax({
+               url:'/ajax/topicdata',
+               data:{
+                    'myvar' : myvar
+               },
+               dataType:'json',
+               success:function (data) {
+                   $('.lbl-1').text(data.am);
+                   $('#reviewSubmitModalForm').modal('show');
+               }
+            });
+        }
+    </script>
+    <div class="modal fade" id="reviewSubmitModalForm" tabindex="-2" role="dialog" aria-labelledby="myModalLabel1"
+             aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content form-elegant">
+                <!--Header-->
+                <div class="modal-header text-center align-items-center justify-content-center flex-column d-flex">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div>
+                        <img src="{% static 'img/submitted.png' %}" class="img-submitted">
+                        <h4>Review Submitted </h4>
+                        <span class="lbl-1">Thank you for completing the review of this submission.</span>
+                        <span class="lbl-2">It helps us get better.</span>
+                    </div>
+                </div>
+
+                <div class="modal-body mx-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock js %}

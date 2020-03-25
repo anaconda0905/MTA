@@ -1,0 +1,122 @@
+[
+  {
+    "model": "boards.board",
+    "pk": 1,
+    "fields": {
+      "name": "Stage Bus",
+      "description": "Stage Bus"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 2,
+    "fields": {
+      "name": "Express Bus",
+      "description": "Express Bus"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 3,
+    "fields": {
+      "name": "Bus Rapid Transit",
+      "description": "Bus Rapid Transit"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 4,
+    "fields": {
+      "name": "Mail Shuttle",
+      "description": "Mail Shuttle"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 5,
+    "fields": {
+      "name": "Airport Shuttle",
+      "description": "Airport Shuttle"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 6,
+    "fields": {
+      "name": "Tourism Shuttle",
+      "description": "Tourism Shuttle"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 7,
+    "fields": {
+      "name": "School Bus",
+      "description": "School Bus"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 8,
+    "fields": {
+      "name": "Campus Shuttle",
+      "description": "Campus Shuttle"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 9,
+    "fields": {
+      "name": "Bus Terminal",
+      "description": "Bus Terminal"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 10,
+    "fields": {
+      "name": "Texicab and Ridehailing",
+      "description": "Texicab and Ridehailing"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 11,
+    "fields": {
+      "name": "Train and Rail",
+      "description": "Train and Rail"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 12,
+    "fields": {
+      "name": "Cycle and walk",
+      "description": "Cycle and walk"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 13,
+    "fields": {
+      "name": "Ride Sharing Carpool",
+      "description": "Ride Sharing Carpool"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 14,
+    "fields": {
+      "name": "Ferry",
+      "description": "Ferry"
+    }
+  },
+  {
+    "model": "boards.board",
+    "pk": 15,
+    "fields": {
+      "name": "other",
+      "description": "other"
+    }
+  }
+]

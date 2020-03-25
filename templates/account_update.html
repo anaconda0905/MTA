@@ -1,0 +1,425 @@
+{% extends 'base_pages.html' %}
+{% load static %}
+{% load humanize %}
+{% load gravatar %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.6/css/intlTelInput.css">
+{% endblock css %}
+
+
+{% block content %}
+
+    <!-- Start banner Area -->
+    <section class="banner-area">
+        <div class="container box_1170">
+            <div class="row profilescreen">
+            </div>
+        </div>
+    </section>
+    <!-- End banner Area -->
+
+    <!-- Start main body Area -->
+    <div class="main-body section-gap mt--30">
+        <div class="container box_1170">
+            <div class="row user-area bs-panel d-flex flex-row">
+                <div class="col-lg-6 col-md-8 col-sm-8 col-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-3">
+                            {% if user.profile.image %}
+                                <img id="back_user_img" style="width: 100px; !important;" src="{{ user.profile.image.url }}"/>
+                            {% else %}
+                                <img id="back_user_img" style="width: 100px !important;" src="{% static 'img/default.png' %}"/>
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-9">
+                            <div class="user-info">
+                                <h3>Username</h3>
+                                <h5>@{{ user.username }}</h5>
+                            </div>
+                            <div class="user-link d-flex justify-content-between flex-row">
+                                <div>
+                                    <h4>Review</h4>
+                                    <h5>{{ data|length }}</h5>
+                                </div>
+                                <div>
+                                    <h4>Follow</h4>
+                                    <h5>0</h5>
+                                </div>
+                                <div>
+                                    <h4>Following</h4>
+                                    <h5>0</h5>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-4 col-12">
+                    <a href="#" class="" data-toggle="modal" data-target="#profileEditModalForm">Edit</a>
+                </div>
+            </div>
+
+            <div class="row review-area bs-panel">
+                <div class="col-md-12 d-flex flex-row justify-content-between">
+                    <h3>Review</h3>
+                    <div class="create-review-icon">
+                        <a href="{% url 'review' %}">
+                            <img src="{% static 'img/icons-create-purple.png' %}"></img>
+                            <span>&nbsp;Create A REVIEW</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row" style="margin-top: 20px;">
+                        {% for adata in data %}
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="single-post-item short">
+                                <div class="post-header justify-content-between d-flex flex-row">
+                                    <div>
+                                        <label class="nick-name">
+                                            {% with user.profile.fullname|split:" " as names %}
+                                                {% if names|length == 1 %}
+                                                    {{ user.profile.fullname|make_list|first }}{% filter upper %}{{ user.profile.fullname|make_list|last }}{% endfilter %}
+                                                {% else %}
+                                                    {% for name in names %}
+                                                        {{ name|make_list|first }}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endwith %}
+
+                                        </label>
+                                        <label>@{{ adata.starter }}</label>
+                                    </div>
+                                    <label>{{ adata.last_updated|naturaltime }}</label>
+                                </div>
+                                <figure style="height: 155px;">
+                                    {% for file in files %}
+                                        {% if file.topic.id == adata.id %}
+                                            <img class="post-img img-fluid" src="{{ file.afile.url }}" alt="">
+                                            {{ "<!--" }}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {{ "-->" }}
+
+
+                                </figure>
+                                <div class="post-footer">
+                                    <div class="justify-content-between d-flex flex-row">
+                                        <div>
+                                            {% if adata.feeling == 'happy' %}
+                                                <img src="{% static 'img/icons-emoji-happy.png' %}"
+                                                 style="max-height: 20px;"/>
+                                            {% else %}
+                                                <img src="{% static 'img/angry.png' %}"
+                                                 style="max-height: 20px;"/>
+                                            {% endif %}
+                                            <label><span style="font-weight: bold;">
+                                                {{ adata.board }}</span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <img src="{% static 'img/icons-likebutton-after.png' %}"
+                                                 style="max-height: 20px;"/>
+                                            <label>0</label>
+                                        </div>
+                                    </div>
+                                    <div class="justify-content-between d-flex flex-row" style="margin-top: -10px;">
+                                        <label>{{ adata.subcategory }}</label>
+                                        <label>: {{ adata.quick_review }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Start main body Area -->
+
+
+
+
+{% endblock %}
+
+
+{% block modal %}
+<div class="modal fade" id="reviewSubmitModalForm" tabindex="-2" role="dialog" aria-labelledby="myModalLabel1"
+             aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content form-elegant">
+                <!--Header-->
+                <div class="modal-header text-center align-items-center justify-content-center flex-column d-flex">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div>
+                        <img src="{% static 'img/submitted.png' %}" class="img-submitted">
+                        <h4>Review Submitted</h4>
+                        <span class="lbl-1">Thank you for completing the review of this submission.</span>
+                        <span class="lbl-2">It helps us get better.</span>
+                    </div>
+
+                </div>
+
+                <div class="modal-body mx-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="profileEditModalForm" tabindex="-2" role="dialog" aria-labelledby="myModalLabel1"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content form-elegant">
+                <!--Header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body mx-4">
+
+                    <!--Body-->
+                    <form method="post" enctype="multipart/form-data" onsubmit="submitFunc()">
+                        {% csrf_token %}
+                        {% for hidden in user_form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+
+                        {{ profile_form.management_form }}
+
+                        {% for form in profile_form.forms %}
+                            {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                            {% endfor %}
+                            <div id="img_hover" class="text-center">
+                            {% if user.profile.image %}
+                                <img id="img_id" src="{{ user.profile.image.url }}" style='cursor:pointer; border-radius: 50%; background-size: cover;width: 130px; height: 130px;'>
+                                    <input type="file"
+                                           style="display: none;"
+                                           name="profile-0-image"
+                                           alt="profile"
+                                           onchange="upload_img(this);"
+                                           id="{{ form.image.id_for_label }}"
+                                           {% if form.image.field.required %}required{% endif %}>
+                                </img>
+                            {% else %}
+                                <img id="img_id" src="{% static 'img/default.png' %}" style='cursor:pointer; border-radius: 50%; background-size: cover;width: 130px; height: 130px;'>
+                                    <input type="file"
+                                           style="display: none;"
+                                           name="profile-0-image"
+                                           alt="profile"
+                                           onchange="upload_img(this);"
+                                           id="{{ form.image.id_for_label }}"
+                                           {% if form.image.field.required %}required{% endif %}>
+                                </img>
+                            {% endif %}
+                            </div>
+
+                            {% for error in form.image.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>Error!</strong>
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                            <br>
+
+                            <div class="wrap-input100 validate-input" data-validate="Username is required">
+                                <span for="{{ form.fullname.id_for_label }}"
+                                      class="label-input100">FULLNAME</span>
+                                <input type="text"
+                                       name="profile-0-fullname"
+                                       id="{{ form.fullname.id_for_label }}"
+                                       class="input100"
+                                       placeholder="Type your full name as NRIC"
+                                       {% if form.fullname.value != None %}value="{{ form.fullname.value|stringformat:'s' }}"{% endif %}
+                                       maxlength="{{ form.fullname.field.max_length }}"
+                                       {% if form.fullname.field.required %}required{% endif %}>
+                                <span class="focus-input100" data-symbol="&#xf20e;"></span>
+                            </div>
+
+                            {% for error in form.fullname.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>Error!</strong>
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                            <br>
+
+                        {% endfor %}
+
+
+                        <div class="wrap-input100 validate-input" data-validate="Username is required">
+                            <span for="{{ user_form.username.id_for_label }}" class="label-input100">USERNAME</span>
+                            <input type="text"
+                                   name="{{ user_form.username.name }}"
+                                   id="{{ user_form.username.id_for_label }}"
+                                   class="input100"
+                                   placeholder="Type your username"
+                                   {% if user_form.username.value != None %}value="{{ user_form.username.value|stringformat:'s' }}"{% endif %}
+                                   maxlength="{{ user_form.username.field.max_length }}"
+                                   {% if user_form.username.field.required %}required{% endif %}>
+                            <span class="focus-input100" data-symbol="&#xf206;"></span>
+                        </div>
+
+                        {% for error in user_form.username.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong>
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                        <br>
+
+
+                        <div class="wrap-input100 validate-input" data-validate="Username is required">
+                            <span for="{{ user_form.email.id_for_label }}" class="label-input100">EMAIL</span>
+                            <input type="email"
+                                   name="{{ user_form.email.name }}"
+                                   id="{{ user_form.email.id_for_label }}"
+                                   class="input100"
+                                   style="color:purple;"
+                                   placeholder="Type your email"
+                                   {% if user_form.email.value != None %}value="{{ user_form.email.value|stringformat:'s' }}"{% endif %}
+                                   readonly = "readonly"
+                                   maxlength="{{ user_form.email.field.max_length }}"
+                                   {% if user_form.email.field.required %}required{% endif %}>
+                            <span class="focus-input100" data-symbol="&#xf15a;"></span>
+                        </div>
+                        {% for error in user_form.email.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong>
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                        <br>
+
+
+                        {% for form in profile_form.forms %}
+
+
+                            <div class="wrap-input100 validate-input" data-validate="Username is required">
+                                <span for="{{ form.birth_date.id_for_label }}"
+                                      class="label-input100">BIRTH OF DATE</span>
+                                <input type="date"
+                                       name="profile-0-birth_date"
+                                       id="{{ form.birth_date.id_for_label }}"
+                                       class="input100"
+                                       placeholder="Type your birth of date"
+                                       {% if form.birth_date.value != None %}value="{{ form.birth_date.value|stringformat:'s' }}"{% endif %}
+                                       {% if form.birth_date.field.required %}required{% endif %}>
+                                <span class="focus-input100" data-symbol="&#xf332;"></span>
+                            </div>
+
+                            {% for error in form.birth_date.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>Error!</strong>
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                            <br>
+
+                            <div class="wrap-input100 validate-input" data-validate="Username is required">
+                                <span for="{{ form.phone.id_for_label }}"
+                                      class="label-input100">MOBILE NO.</span>
+                                <input type="tel"
+                                       name="profile-0-phone"
+                                       id="{{ form.phone.id_for_label }}"
+                                       class="input100"
+                                       placeholder="Type your mobile number"
+                                       {% if form.phone.value != None %}value="{{ form.phone.value|stringformat:'s' }}"{% endif %}
+                                       maxlength="{{ form.phone.field.max_length }}"
+                                       {% if form.phone.field.required %}required{% endif %}>
+{#                                <span class="focus-input100" data-symbol="&#xf2c8;"></span>#}
+                            </div>
+
+                            {% for error in form.phone.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>Error!</strong>
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                            <br>
+                        {% endfor %}
+
+{#                        {% include 'includes/user_form.html' %}#}
+{#                        {% include 'includes/profile_form.html' %}#}
+                        <div class="text-center">
+                            <button type="button" class="sign-in-btn text-uppercase" data-dismiss="modal" style="width: 40%;">Exit</button>
+                            <button type="submit" class="sign-in-btn text-uppercase" style="width: 40%;">Save</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div href="#" class="modal-footer">
+
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    {% if success == 10 %}
+        <script>
+        $('#reviewSubmitModalForm').modal('show');
+        </script>
+    {% endif %}
+    {% if success == 2 %}
+        <script>
+            $('#profileEditModalForm').modal('show');
+
+        {% if user.profile.image %}
+            document.getElementById('img_id').src = "{% static 'img/default.png' %}";
+            document.getElementById('back_user_img').src = "{% static 'img/default.png' %}";
+        {% endif %}
+        </script>
+    {% endif %}
+    {% if success == 1 %}
+        <script>
+            window.alert("Successfully updated.");
+        </script>
+    {% endif %}
+    <script>
+        function upload_img(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img_id').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#img_id').on('click',function () {
+           $('#id_profile-0-image').click();
+        });
+
+        $('#img_id').hover(function () {
+            $(this).css("opacity", "40%");
+        }, function () {
+            $(this).css("opacity", "100%");
+        });
+        $("#id_profile-0-phone").intlTelInput({
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.6/js/utils.js"
+        });
+
+        function submitFunc() {
+            var temp = $("#id_profile-0-phone").intlTelInput("getSelectedCountryData").dialCode + $("#id_profile-0-phone").val();
+            $(this).val(temp);
+            {#window.alert(temp);#}
+        }
+
+
+    </script>
+
+{% endblock %}
