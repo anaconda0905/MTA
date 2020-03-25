@@ -6,6 +6,7 @@ $warning: #f4e700;
 $danger: #f44a40;
 $link: #f9f9ff;
 $disable: (#222222, .3);
+$gutters: 10%;
 .sample-text-area {
     background: $white;
     padding: 100px 0 70px 0;
@@ -1086,7 +1087,7 @@ h6 {
     color: #2196f3!important; }
 
 .modal-content{
-    border-radius: .8rem !important;
+    //border-radius: 15px !important;
 }
 
 .form-elegant .modal-body, .form-elegant .modal-footer {
@@ -2147,7 +2148,7 @@ html {
 body {
   background: #efefef;
   color: $dark;
-  font-family: "Raleway";
+  font-family: "open-sans";
   height: 100%;
   
   h1 {
@@ -2669,3 +2670,71 @@ body {
 
     border-top: 1px solid #b5b5b5;
  }
+
+.map-wrapper{
+    position: relative;
+    background:$white;
+
+    #mapModal{
+       position: absolute;
+        border-color: $primary-color;
+        .modal-header{
+          background-color:$primary-color;
+          button{
+            span{
+                color:$white;
+                font-size: 18px;
+            }
+          }
+       }
+
+       .modal-body{
+          /* Defines the width of the carousel and centers it on the page */
+          .slick-carousel {
+            margin: 10px auto;
+            width: 360px;
+            border-bottom: solid 2px $primary-color;
+            border-top: solid 2px $primary-color;
+          }
+
+          .slick-track{
+            width: 368px;
+            display: flex;
+            flex-direction: row;
+          }
+          /* The width of each slide */
+          .slick-slide {
+              //border: 1px solid #9600b3;
+              width: 175px;
+              height: 180px;
+              margin-right: 10px;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+          }
+
+          /* Color of the arrows */
+          .slick-next::before, .slick-prev::before {
+            color: blue;
+          }
+
+          .slick-next {
+            right: -20px;
+          }
+
+          .slick-dots{
+            bottom: -25px;
+          }
+       }
+    }
+}
+
+ // ---------------------popular modal dialog---------------------
+ .modal-dialog-slideout {min-height: 100%; margin: 0 0 0 auto;background: #fff;}
+ .modal.fade .modal-dialog.modal-dialog-slideout {-webkit-transform: translate(100%,0)scale(1);transform: translate(100%,0)scale(1);}
+ .modal.fade.show .modal-dialog.modal-dialog-slideout {border-top-left-radius: 15px; border-top-right-radius: 15px;-webkit-transform: translate(0,0);transform: translate(0,0);display: flex;align-items: stretch;-webkit-box-align: stretch;height: 100%;}
+ .modal.fade.show .modal-dialog.modal-dialog-slideout .modal-body{overflow-y: auto;overflow-x: hidden;}
+ .modal-dialog-slideout .modal-content{border: 0;}
+ .modal-dialog-slideout .modal-header, .modal-dialog-slideout .modal-footer {height: 69px; display: block;} 
+ .modal-dialog-slideout .modal-header h5 {float:left;}

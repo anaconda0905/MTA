@@ -115,7 +115,7 @@ def review(request):
             starter=request.user,
             board=Board.objects.get(id=category),
             topic=topic,
-            afile='/nomap.png')
+            afile='/nomap.jpg')
 
 
         Post.objects.create(

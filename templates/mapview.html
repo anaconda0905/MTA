@@ -1,15 +1,18 @@
 
 {% extends 'base_pages.html' %}
 {% load static %}
-{% load humanize %}
-{% load gravatar %}
+
 {% block title %}Map view{% endblock %}
 
 {% block stylesheet %}
+
     <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slick-theme.min.css' %}">
+
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
@@ -32,7 +35,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script>var myvar = "{{ topicdatas }}";</script>
+
     {% block css %}
         <style>
         .mapview {
@@ -55,9 +58,160 @@
 	<!-- Start main body Area -->
 	<div id="popular_section" class="main-body section-gap">
 		<div class="container box_1170">
-			<div class="mapview">
-                <div id="googleMap" style="height: 530px;">
+			<div class="map-wrapper" style="min-height: 500px;">
+                <div class="modal fade" id="mapModal" style="padding-right: 0px !important;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true" >
+				  <div class="modal-dialog modal-dialog-slideout" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header d-flex flex-row">
+				        <img src="{% static 'img/logo-white.png' %}">
+				        <button type="button" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">×</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				      	<div class="slick-carousel">
+				      	  <!-- Inside the containing div, add one div for each slide -->
+				      	  <div>
+				      	    <!-- You can put an image or text inside each slide div -->
+				      	    <img src="{% static 'img/map-1.png' %}">
+				      	  </div>
+				      	  <div>
+				      	    <img src="{% static 'img/map-1.png' %}">
+				      	  </div>
+				      	  <div>
+				      	    <img src="{% static 'img/map-1.png' %}">
+				      	  </div>
+				      	</div>
+				      	<div class="userinfo-wrapper d-flex flex-row justify-content-between">
+				      		<div class="d-flex flex-row">
+					      		<img src="{% static 'img/i8.jpg' %}" style="border-radius: 50%;">
+					      		<div class="d-flex flex-column ml-10">
+					      			<span class="username">Username</span>
+					      			<span>2h</span>
+					      		</div>
+				      		</div>
 
+				      	</div>
+				      	<div class="userfeeling-wrapper d-flex flex-row mt-20">
+				      		<img src="{% static 'img/happy.png' %}">
+				      		<div>
+				      			<span>Bus</span>&nbsp;/&nbsp;Cleanliness
+				      		</div>
+				      	</div>
+				      	<ul class="reviewfeeling-wrapper">
+				      		<li>Bus No : <span>ABC 1234</span></li>
+				      		<li>Incident Date : <span></span></li>
+				      		<li>Incident Time : <span></span></li>
+				      		<li>Route No : <span></span></li>
+				      		<li>Route Name : <span></span></li>
+				      		<li>Bus Operator : <span></span></li>
+				      	</ul>
+				      	<div class="rating-wrapper justify-content-between d-flex flex-row">
+				      		<div class="d-flex flex-row">
+					      		<div class="star-ratings-sprite">
+					      			<span style="width:52%" class="star-ratings-sprite-rating"></span>
+					      		</div>
+					      		<span class="ml-10">30 Reviews</span>
+				      		</div>
+				      		<div>
+				      			<img src="{% static 'img/icons-likebutton-before.png' %}">
+				      			<span>1.3k</span>
+				      		</div>
+				      	</div>
+				      	<div class="vote-wrapper">
+				      		<div class="row">
+				      		    <div class="col-10" style="margin: 0 auto;">
+				      		      <div id="slider-range"></div>
+				      		    </div>
+				      		  </div>
+				      		  <div class="row slider-labels">
+				      		    <div class="col-6 caption">
+				      		      <strong style="margin-left: 10px;">Min:</strong> <span id="slider-range-value1"></span>
+				      		    </div>
+				      		    <div class="col-6 text-right caption pr-10">
+				      		      <strong>Max:</strong> <span id="slider-range-value2" style="margin-right: 10px;"></span>
+				      		    </div>
+				      		  </div>
+				      		  <div class="row">
+				      		    <div class="col-sm-12">
+				      		      <form>
+				      		        <input type="hidden" name="min-value" value="">
+				      		        <input type="hidden" name="max-value" value="">
+				      		      </form>
+				      		    </div>
+				      		  </div>
+				      	</div>
+
+						<div class="comments-wrapper">
+							<span>2 Comments</span>
+							<ul>
+								<li>
+									<div class="usercommentinfo-wrapper d-flex flex-row justify-content-between">
+										<div class="d-flex flex-row">
+											<img class="avatar-img" src="{% static 'img/i8.jpg' %}" style="border-radius: 50%;">
+											<div class="wrap-input200 validate-input ml-10">
+												<input class="input200" type="text" name="comment" id="user_comment"/>
+												<span class="focus-input200" data-symbol="&#xf1f0;"></span>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="usercommentinfo-wrapper d-flex flex-row justify-content-between">
+										<div class="d-flex flex-row">
+											<img class="avatar-img" src="{% static 'img/i8.jpg' %}" style="border-radius: 50%;">
+											<div class="d-flex flex-column ml-10">
+												<span class="username">Username</span>
+												<span>2h</span>
+											</div>
+										</div>
+										<div class="d-flex flex-column">
+											<span class="comment-title">Many rubbish on the floor</span>
+											<span class="comment-reply">Reply</span>
+										</div>
+										<div class="follow-info">
+											<img class="heart-img" src="{% static 'img/icons-likebutton-before.png' %}">
+											<span>1.3k</span>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="usercommentinfo-wrapper d-flex flex-row justify-content-between">
+										<div class="d-flex flex-row">
+											<img class="avatar-img" src="{% static 'img/i8.jpg' %}" style="border-radius: 50%;">
+											<div class="d-flex flex-column ml-10">
+												<span class="username">Username</span>
+												<span>2h</span>
+											</div>
+										</div>
+										<div class="d-flex flex-column">
+											<span class="comment-title">Many rubbish on the floor</span>
+											<span class="comment-reply">Reply</span>
+										</div>
+										<div class="follow-info">
+											<img class="heart-img" src="{% static 'img/icons-likebutton-before.png' %}">
+											<span>1.3k</span>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+
+				      </div>
+				      <div class="modal-footer">
+                          <div class="text-center">
+                            <button type="button" class="sign-in-btn text-uppercase" data-dismiss="modal" style="width: 40%;">Close</button>
+                            <button type="submit" class="sign-in-btn text-uppercase" style="width: 40%;">Reply</button>
+                        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+                <div class="mapview">
+                    <div id="googleMap" style="height: 530px;">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,17 +228,20 @@
     <script src="{% static 'js/jquery.validate.min.js' %}"></script>
     <script src="{% static 'js/jquery.steps.js' %}"></script>
     <script src="{% static 'js/header-scrolled.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-1.4.1.min.js' %}"></script>
+    <script src="{% static 'js/slick.min.js' %}"></script>
+    <script src="{% static 'js/popular2.js' %}"></script>
+
     <script>
 
         var map = L.map('googleMap', {
             center: L.latLng(3.141916, 101.6867),
-            zoom: 16
+            zoom: 13
         });
         map.invalidateSize();
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18
+
         }).addTo(map);
         L.Control.geocoder().addTo(map);
         var lc = L.control.locate({
@@ -102,7 +259,7 @@
         {% for topic_data in topicdatas %}
             {% if topic_data.subcategory == 'Safety' %}
                 myIcon = L.icon({
-					iconUrl: "{% static 'images/safety.png' %}", // the url of the img
+					iconUrl: "{% static 'images/map/bus.png' %}", // the url of the img
 					iconSize: [40, 40],
 					iconAnchor: [20, 40] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
 				});
@@ -113,7 +270,7 @@
         }).on('click', markerOnClick)
             .addTo(map);
         {% endfor %}
-        
+
         function markerOnClick(e) {
             myvar = this.options.data;
 
@@ -124,34 +281,13 @@
                },
                dataType:'json',
                success:function (data) {
-                   $('.lbl-1').text(data.am);
-                   $('#reviewSubmitModalForm').modal('show');
+                   console.log('ss');
+                   {#$('.lbl-1').text(data.am);#}
+                   $('#mapModal').modal('show');
+                   $('#mapModal').css('padding-right', '0px');
                }
             });
         }
     </script>
-    <div class="modal fade" id="reviewSubmitModalForm" tabindex="-2" role="dialog" aria-labelledby="myModalLabel1"
-             aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <!--Content-->
-            <div class="modal-content form-elegant">
-                <!--Header-->
-                <div class="modal-header text-center align-items-center justify-content-center flex-column d-flex">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <div>
-                        <img src="{% static 'img/submitted.png' %}" class="img-submitted">
-                        <h4>Review Submitted </h4>
-                        <span class="lbl-1">Thank you for completing the review of this submission.</span>
-                        <span class="lbl-2">It helps us get better.</span>
-                    </div>
-                </div>
 
-                <div class="modal-body mx-4">
-
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock js %}

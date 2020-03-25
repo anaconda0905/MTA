@@ -1622,9 +1622,6 @@ h6 {
 .modal-dialog .form-elegant .btn .fab {
   color: #2196f3 !important; }
 
-.modal-content {
-  border-radius: .8rem !important; }
-
 .form-elegant .modal-body, .form-elegant .modal-footer {
   font-weight: 400; }
 
@@ -2434,7 +2431,7 @@ html {
 body {
   background: #efefef;
   color: #333;
-  font-family: "Raleway";
+  font-family: "open-sans";
   height: 100%; }
   body h1 {
     text-align: center;
@@ -2866,6 +2863,77 @@ body {
 
 .custom-options a + .custom-options a {
   border-top: 1px solid #b5b5b5; }
+
+.map-wrapper {
+  position: relative;
+  background: #fff; }
+  .map-wrapper #mapModal {
+    position: absolute;
+    border-color: #9600b3; }
+    .map-wrapper #mapModal .modal-header {
+      background-color: #9600b3; }
+      .map-wrapper #mapModal .modal-header button span {
+        color: #fff;
+        font-size: 18px; }
+    .map-wrapper #mapModal .modal-body {
+      /* Defines the width of the carousel and centers it on the page */
+      /* The width of each slide */
+      /* Color of the arrows */ }
+      .map-wrapper #mapModal .modal-body .slick-carousel {
+        margin: 10px auto;
+        width: 360px;
+        border-bottom: solid 2px #9600b3;
+        border-top: solid 2px #9600b3; }
+      .map-wrapper #mapModal .modal-body .slick-track {
+        width: 368px;
+        display: flex;
+        flex-direction: row; }
+      .map-wrapper #mapModal .modal-body .slick-slide {
+        width: 175px;
+        height: 180px;
+        margin-right: 10px; }
+        .map-wrapper #mapModal .modal-body .slick-slide img {
+          width: 100%;
+          height: 100%; }
+      .map-wrapper #mapModal .modal-body .slick-next::before, .map-wrapper #mapModal .modal-body .slick-prev::before {
+        color: blue; }
+      .map-wrapper #mapModal .modal-body .slick-next {
+        right: -20px; }
+      .map-wrapper #mapModal .modal-body .slick-dots {
+        bottom: -25px; }
+
+.modal-dialog-slideout {
+  min-height: 100%;
+  margin: 0 0 0 auto;
+  background: #fff; }
+
+.modal.fade .modal-dialog.modal-dialog-slideout {
+  -webkit-transform: translate(100%, 0) scale(1);
+  transform: translate(100%, 0) scale(1); }
+
+.modal.fade.show .modal-dialog.modal-dialog-slideout {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+  display: flex;
+  align-items: stretch;
+  -webkit-box-align: stretch;
+  height: 100%; }
+
+.modal.fade.show .modal-dialog.modal-dialog-slideout .modal-body {
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+.modal-dialog-slideout .modal-content {
+  border: 0; }
+
+.modal-dialog-slideout .modal-header, .modal-dialog-slideout .modal-footer {
+  height: 69px;
+  display: block; }
+
+.modal-dialog-slideout .modal-header h5 {
+  float: left; }
 
 /*--------------------------------------------------------------
 # Header
@@ -4242,6 +4310,192 @@ body.mobile-nav-active #mobile-nav-toggle {
   @media (max-width: 768px) {
     #popular_section {
       margin-top: 75px; } }
+
+.userinfo-wrapper {
+  margin-top: 25px; }
+  .userinfo-wrapper .username {
+    color: #000;
+    font-weight: bold; }
+  .userinfo-wrapper .more {
+    max-height: 5px;
+    display: inline-block;
+    margin-top: 15px !important; }
+  .userinfo-wrapper .popup-menu {
+    left: unset !important;
+    right: -5px;
+    top: 30px !important; }
+  .userinfo-wrapper .ui .dropdown .menu > .item:hover {
+    color: #9600b3 !important; }
+
+.comments-wrapper {
+  margin-top: 10px; }
+
+.usercommentinfo-wrapper {
+  border-bottom: 1px solid #e6e6e6;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+  .usercommentinfo-wrapper .avatar-img {
+    max-height: 40px; }
+  .usercommentinfo-wrapper .heart-img {
+    max-height: 13px; }
+  .usercommentinfo-wrapper .follow-info {
+    padding: 8px 0; }
+  .usercommentinfo-wrapper .username {
+    color: #000;
+    font-weight: bold;
+    line-height: 1.5; }
+  .usercommentinfo-wrapper .comment-title {
+    line-height: 1.5; }
+  .usercommentinfo-wrapper .comment-reply {
+    color: #9600b3; }
+  .usercommentinfo-wrapper .popup-menu {
+    left: unset !important;
+    right: -5px;
+    top: 30px !important; }
+  .usercommentinfo-wrapper .ui .dropdown .menu > .item:hover {
+    color: #9600b3 !important; }
+
+.userfeeling-wrapper {
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #9600b3; }
+  .userfeeling-wrapper img {
+    margin-top: 2px;
+    margin-right: 15px;
+    max-height: 20px; }
+  .userfeeling-wrapper div {
+    color: #fff; }
+    .userfeeling-wrapper div span {
+      font-weight: bold; }
+
+.reviewfeeling-wrapper {
+  padding: 10px;
+  color: #000;
+  font-size: 14px; }
+
+.rating-wrapper {
+  border-top: 1px solid #e6e6e6;
+  padding: 5px 0; }
+  .rating-wrapper .star-ratings-sprite {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    font-size: 0;
+    height: 21px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 110px; }
+    .rating-wrapper .star-ratings-sprite-rating {
+      background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+      background-position: 0 100%;
+      float: left;
+      height: 21px;
+      display: block; }
+  .rating-wrapper img {
+    max-height: 20px;
+    margin-right: 10px; }
+
+.vote-wrapper {
+  background-color: #e6e6e6;
+  margin-top: 10px;
+  padding: 15px 0px;
+  /* Functional styling;
+   * These styles are required for noUiSlider to function.
+   * You don't need to change these rules to apply your design.
+   */
+  /* Painting and performance;
+   * Browsers can paint handles in their own layer.
+   */
+  /* Slider size and handle placement;
+   */
+  /* Styling;
+   */
+  /* Handles and cursors;
+   */
+  /* Disabled state;
+   */ }
+  .vote-wrapper .slider-labels {
+    margin-top: 10px; }
+    .vote-wrapper .slider-labels .caption, .vote-wrapper .slider-labels span {
+      color: #000; }
+  .vote-wrapper .noUi-target, .vote-wrapper .noUi-target * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-touch-action: none;
+    touch-action: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+  .vote-wrapper .noUi-target {
+    position: relative;
+    direction: ltr; }
+  .vote-wrapper .noUi-base {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    /* Fix 401 */ }
+  .vote-wrapper .noUi-origin {
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0; }
+  .vote-wrapper .noUi-handle {
+    position: relative;
+    z-index: 1; }
+  .vote-wrapper .noUi-stacking .noUi-handle {
+    /* This class is applied to the lower origin when
+       its values is > 50%. */
+    z-index: 10; }
+  .vote-wrapper .noUi-state-tap .noUi-origin {
+    -webkit-transition: left 0.3s,top .3s;
+    transition: left 0.3s,top .3s; }
+  .vote-wrapper .noUi-state-drag * {
+    cursor: inherit !important; }
+  .vote-wrapper .noUi-base, .vote-wrapper .noUi-handle {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+  .vote-wrapper .noUi-horizontal {
+    height: 4px; }
+  .vote-wrapper .noUi-horizontal .noUi-handle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    left: -7px;
+    top: -7px;
+    background-color: #9600b3; }
+  .vote-wrapper .noUi-background {
+    background: #fff; }
+  .vote-wrapper .noUi-connect {
+    background: #9600b3;
+    -webkit-transition: background 450ms;
+    transition: background 450ms; }
+  .vote-wrapper .noUi-origin {
+    border-radius: 2px; }
+  .vote-wrapper .noUi-target {
+    border-radius: 2px; }
+  .vote-wrapper .noUi-draggable {
+    cursor: w-resize; }
+  .vote-wrapper .noUi-vertical .noUi-draggable {
+    cursor: n-resize; }
+  .vote-wrapper .noUi-handle {
+    cursor: default;
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important; }
+  .vote-wrapper .noUi-handle:active {
+    border: 8px solid #345DBB;
+    border: 8px solid rgba(53, 93, 187, 0.38);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    left: -14px;
+    top: -14px; }
+  .vote-wrapper [disabled].noUi-connect, .vote-wrapper [disabled] .noUi-connect {
+    background: #B8B8B8; }
+  .vote-wrapper [disabled].noUi-origin, .vote-wrapper [disabled] .noUi-handle {
+    cursor: not-allowed; }
 
 #steps_review_detail_home {
   position: relative;
