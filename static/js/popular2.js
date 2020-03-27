@@ -71,7 +71,7 @@ $(document).ready(function() {
   });
 
   $(".viewby-select-box .custom-option").on("click", function() {
-    console.log($(this).attr("data-value"));
+    // console.log($(this).attr("data-value"));
     $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
     $(this).parents(".custom-options").find(".custom-option").removeClass("selection");
     $(this).addClass("selection");

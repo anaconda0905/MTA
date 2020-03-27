@@ -18,7 +18,9 @@ from django.forms.models import inlineformset_factory, formset_factory
 from django.http import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
+
 class BoardListView(ListView):
     model = Board
     context_object_name = 'boards'
@@ -211,21 +213,39 @@ class PostUpdateView(UpdateView):
         post.save()
         return redirect('topic_posts', pk=post.topic.board.pk, topic_pk=post.topic.pk)
 
+
 def mapview(request):
+
     topicdatas = Topic.objects.all()
+
+    post_list = Post.objects.all()
+    page=request.GET.get('page')
+    paginator = Paginator(post_list, 20)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+
     if request.method == 'POST':
-        for afile in request.FILES.getlist('upload_files'):
-            MFile.objects.create(
-                starter=request.user,
-                board=Board.objects.get(id=request.POST['ucat_id']),
+        if request.user.is_authenticated:
+            for afile in request.FILES.getlist('upload_files'):
+                MFile.objects.create(
+                    starter=request.user,
+                    board=Board.objects.get(id=request.POST['ucat_id']),
+                    topic=Topic.objects.get(id=request.POST['server_topic_id']),
+                    afile=afile)
+            Post.objects.create(
+                message=request.POST['comment'],
                 topic=Topic.objects.get(id=request.POST['server_topic_id']),
-                afile=afile)
-        Post.objects.create(
-            message=request.POST['comment'],
-            topic=Topic.objects.get(id=request.POST['server_topic_id']),
-            created_by=request.user,
-        )
-    return render(request, 'mapview.html', {'topicdatas' : topicdatas,})
+                created_by=request.user,
+            )
+        else:
+
+            return redirect('login')
+    return render(request, 'mapview.html', {'topicdatas' :  topicdatas, 'page':page, 'posts':posts,})
 
 def topicdata(request):
 
@@ -284,13 +304,13 @@ def topicdata(request):
                     <span class="comment-title" style="overflow:hidden;text-overflow:ellipsis;">"""+post.message+"""</span>
                     <span class="comment-reply">Reply</span>
                 </div>
-                <div id="upvote_id" class="follow-info">
+                
+                <div class="follow-info up">
                     <img class="heart-img" src='/static/img/love.png' style="max-height:20px;">
-                    <span>0</span>
                 </div>
-                <div id="downvote_id" class="follow-info">
+                <div class="count" style="margin:10px;">0</div>
+                <div class="follow-info down">
                     <img class="heart-img" src='/static/img/hate.png' style="max-height:20px;">
-                    <span>0</span>
                 </div>
             </div>
         </li>"""
