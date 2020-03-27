@@ -87,6 +87,7 @@ $(document).ready(function() {
     event.stopPropagation();
   });
 
+
 });
 
 // I added some other properties to customize my slider
@@ -128,6 +129,7 @@ $(document).ready(function() {
   
   // Set visual min and max values and also update value hidden form inputs
   rangeSlider.noUiSlider.on('update', function(values, handle) {
+
     document.getElementById('slider-range-value1').innerHTML = values[0];
     document.getElementById('slider-range-value2').innerHTML = values[1];
     document.getElementsByName('min-value').value = moneyFormat.from(

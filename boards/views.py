@@ -111,11 +111,13 @@ def review(request):
                 board=Board.objects.get(id=category),
                 topic=topic,
                 afile=afile)
-        MFile.objects.create(
-            starter=request.user,
-            board=Board.objects.get(id=category),
-            topic=topic,
-            afile='/nomap.jpg')
+
+        if not request.FILES.getlist('upload_files'):
+            MFile.objects.create(
+                starter=request.user,
+                board=Board.objects.get(id=category),
+                topic=topic,
+                afile='/nomap.png')
 
 
         Post.objects.create(
@@ -211,15 +213,107 @@ class PostUpdateView(UpdateView):
 
 def mapview(request):
     topicdatas = Topic.objects.all()
-
+    if request.method == 'POST':
+        for afile in request.FILES.getlist('upload_files'):
+            MFile.objects.create(
+                starter=request.user,
+                board=Board.objects.get(id=request.POST['ucat_id']),
+                topic=Topic.objects.get(id=request.POST['server_topic_id']),
+                afile=afile)
+        Post.objects.create(
+            message=request.POST['comment'],
+            topic=Topic.objects.get(id=request.POST['server_topic_id']),
+            created_by=request.user,
+        )
     return render(request, 'mapview.html', {'topicdatas' : topicdatas,})
 
 def topicdata(request):
 
     topic_id = request.GET.get('myvar', None)
+    mfiles = MFile.objects.filter(topic=topic_id)
+    mfilelist = []
+    for mfile in mfiles:
+        mfilelist.append(mfile.afile.url)
+
+    topic = Topic.objects.get(id=topic_id)
+    uname = str(topic.starter)
+    if not topic.starter.profile.image:
+        uimageurl = '/static/img/default.png'
+    else:
+        uimageurl = topic.starter.profile.image.url
+
+    if topic.feeling == 'happy':
+        ufeeling_url = '/static/img/happy.png'
+    else:
+        ufeeling_url = '/static/img/angry.png'
+
+    ucat = str(topic.board)
+    usubcat = topic.subcategory
+    uquick = topic.quick_review
+    if uquick == "":
+        uquick = "No quick review"
+    ubno = topic.bus_no
+    udata = str(topic.incident_date)
+    utime = str(topic.incident_time)
+    urno = topic.route_no
+    urname = topic.route_name
+    uoperator = topic.bus_operator
+    usubject = topic.subject
+    ucomment = topic.message
+
+    posts = Post.objects.filter(topic=topic_id)
+    html_tag=""""""
+    cnt_comment = len(posts)
+    ucat_id = topic.category
+    for post in posts:
+
+        if post.created_by.profile.image:
+            profile_url=post.created_by.profile.image.url
+        else:
+            profile_url = '/static/img/default.png'
+        html_tag += """<li>
+            <div class="usercommentinfo-wrapper d-flex flex-row justify-content-between">
+                <div class="d-flex flex-row">
+                    <img class="avatar-img" src="""""+ profile_url +""" style="border-radius: 50%;">
+                    <div class="d-flex flex-column ml-10">
+                        <span class="username">Username:</span>
+                        <span>"""+'@'+post.created_by.username+"""</span>
+                    </div>
+                </div>
+                <div class="d-flex flex-column" style="width: 160px;">
+                    <span class="comment-title" style="overflow:hidden;text-overflow:ellipsis;">"""+post.message+"""</span>
+                    <span class="comment-reply">Reply</span>
+                </div>
+                <div id="upvote_id" class="follow-info">
+                    <img class="heart-img" src='/static/img/love.png' style="max-height:20px;">
+                    <span>0</span>
+                </div>
+                <div id="downvote_id" class="follow-info">
+                    <img class="heart-img" src='/static/img/hate.png' style="max-height:20px;">
+                    <span>0</span>
+                </div>
+            </div>
+        </li>"""
+
     data = {
-        'am': topic_id,
-        'i': 1,
+        'uname':uname,
+        'uimageurl': uimageurl,
+        'mfilelist':mfilelist,
+        'ufeeling_url':ufeeling_url,
+        'ucat':ucat,
+        'usubcat':usubcat,
+        'uquick':uquick,
+        'ubno':ubno,
+        'udata':udata,
+        'utime':utime,
+        'urno':urno,
+        'urname':urname,
+        'uoperator':uoperator,
+        'usubject':usubject,
+        'ucomment':ucomment,
+        'html_tag':html_tag,
+        'cnt_comment':cnt_comment,
+        'ucat_id':ucat_id,
     }
 
     return JsonResponse(data)

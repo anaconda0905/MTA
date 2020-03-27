@@ -95,7 +95,7 @@
                                     </div>
                                     <label>{{ adata.last_updated|naturaltime }}</label>
                                 </div>
-                                <figure style="height: 190px;">
+                                <figure style="height: 160px;">
                                     {% for file in files %}
                                         {% if file.topic.id == adata.id %}
                                             <img style="width: 100% !important;" class="post-img img-fluid" src="{{ file.afile.url }}" alt="">

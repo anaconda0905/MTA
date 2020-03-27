@@ -35,7 +35,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <script>
+    var images = ["https://www.w3schools.com/howto/img_nature_wide.jpg", "https://www.w3schools.com/howto/img_snow_wide.jpg", "https://www.w3schools.com/howto/img_mountains_wide.jpg"];
+    </script>
     {% block css %}
         <style>
         .mapview {
@@ -49,6 +51,60 @@
             border-radius: 5px;
             min-width: 180px;
         }
+
+        .container {
+            max-width: 1100px;
+            position: relative;
+            margin: auto;
+        }
+
+        .slideshow {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.22);
+
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            padding: 10px;
+            color: white;
+            border-radius: 3px;
+            font-size: 16px;
+            top: 45%;
+        }
+
+        .next {
+            right: 15px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            color: black;
+            background-color: white;
+        }
+
+        h3 {
+            margin-top: 10px;
+        }
+
+        @media only screen and (max-width: 500px) {
+            .prev,
+            .next {
+                font-size: 12px;
+                top: 40%;
+            }
+        }
+
+        @media only screen and (max-width: 200px) {
+            .prev,
+            .next {
+                font-size: 9px;
+                top: 30%;
+            }
+        }
+
+
         </style>
 
     {% endblock css %}
@@ -62,6 +118,7 @@
                 <div class="modal fade" id="mapModal" style="padding-right: 0px !important;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true" >
 				  <div class="modal-dialog modal-dialog-slideout" role="document">
 				    <div class="modal-content">
+
 				      <div class="modal-header d-flex flex-row">
 				        <img src="{% static 'img/logo-white.png' %}">
 				        <button type="button" data-dismiss="modal" aria-label="Close">
@@ -69,42 +126,40 @@
 				        </button>
 				      </div>
 				      <div class="modal-body">
-				      	<div class="slick-carousel">
-				      	  <!-- Inside the containing div, add one div for each slide -->
-				      	  <div>
-				      	    <!-- You can put an image or text inside each slide div -->
-				      	    <img src="{% static 'img/map-1.png' %}">
-				      	  </div>
-				      	  <div>
-				      	    <img src="{% static 'img/map-1.png' %}">
-				      	  </div>
-				      	  <div>
-				      	    <img src="{% static 'img/map-1.png' %}">
-				      	  </div>
-				      	</div>
-				      	<div class="userinfo-wrapper d-flex flex-row justify-content-between">
+                          <div class="container">
+                              <div class="image-container" style="padding-top: 30px; padding-bottom: 10px;">
+                                  <img id="image" class="slideshow"
+                                       src="https://www.w3schools.com/howto/img_mountains_wide.jpg" alt="pic"
+                                       style="width:100%"/>
+                              </div>
+                              <a class=" btn prev">&#10094;</a> <a class="btn next">&#10095;</a>
+                          </div>
+
+                          <div class="userinfo-wrapper d-flex flex-row justify-content-between">
 				      		<div class="d-flex flex-row">
-					      		<img src="{% static 'img/i8.jpg' %}" style="border-radius: 50%;">
+					      		<img id="profileid" src="{% static 'img/i8.jpg' %}" style="border-radius: 50%;width: 60px;height: 60px;">
 					      		<div class="d-flex flex-column ml-10">
 					      			<span class="username">Username</span>
-					      			<span>2h</span>
+					      			<span id="uusername">2h</span>
 					      		</div>
 				      		</div>
 
 				      	</div>
 				      	<div class="userfeeling-wrapper d-flex flex-row mt-20">
-				      		<img src="{% static 'img/happy.png' %}">
+				      		<img id='uemoji' src="{% static 'img/happy.png' %}">
 				      		<div>
-				      			<span>Bus</span>&nbsp;/&nbsp;Cleanliness
+                                <span id="ucat">Stage</span>&nbsp;/&nbsp;
+                                <span id="usubcat" >Bus</span>&nbsp;/&nbsp;
+                                <span id="uquick">Cleanliness</span>
 				      		</div>
 				      	</div>
 				      	<ul class="reviewfeeling-wrapper">
-				      		<li>Bus No : <span>ABC 1234</span></li>
-				      		<li>Incident Date : <span></span></li>
-				      		<li>Incident Time : <span></span></li>
-				      		<li>Route No : <span></span></li>
-				      		<li>Route Name : <span></span></li>
-				      		<li>Bus Operator : <span></span></li>
+				      		<li>Bus No : <b id="ubno">ABC 1234</b></li>
+				      		<li>Incident Date : <b id="udata"></b></li>
+				      		<li>Incident Time : <b id="utime"></b></li>
+				      		<li>Route No : <b id="urno"></b></li>
+				      		<li>Route Name : <b id="urname"></b></li>
+				      		<li>Bus Operator : <b id="uoperator"></b></li>
 				      	</ul>
 				      	<div class="rating-wrapper justify-content-between d-flex flex-row">
 				      		<div class="d-flex flex-row">
@@ -118,92 +173,74 @@
 				      			<span>1.3k</span>
 				      		</div>
 				      	</div>
-				      	<div class="vote-wrapper">
-				      		<div class="row">
-				      		    <div class="col-10" style="margin: 0 auto;">
-				      		      <div id="slider-range"></div>
-				      		    </div>
-				      		  </div>
-				      		  <div class="row slider-labels">
-				      		    <div class="col-6 caption">
-				      		      <strong style="margin-left: 10px;">Min:</strong> <span id="slider-range-value1"></span>
-				      		    </div>
-				      		    <div class="col-6 text-right caption pr-10">
-				      		      <strong>Max:</strong> <span id="slider-range-value2" style="margin-right: 10px;"></span>
-				      		    </div>
-				      		  </div>
-				      		  <div class="row">
-				      		    <div class="col-sm-12">
-				      		      <form>
-				      		        <input type="hidden" name="min-value" value="">
-				      		        <input type="hidden" name="max-value" value="">
-				      		      </form>
-				      		    </div>
-				      		  </div>
-				      	</div>
+                        <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            <div class="vote-wrapper">
+                                <div class="row">
+                                    <div class="col-10" style="margin: 0 auto;">
+                                      <div id="slider-range"></div>
+                                    </div>
+                                  </div>
+                                  <div class="row slider-labels">
+                                    <div class="col-6 caption">
+                                      <strong style="margin-left: 10px;">Min:</strong> <span id="slider-range-value1"></span>
+                                    </div>
+                                    <div class="col-6 text-right caption pr-10">
+                                      <strong>Max:</strong> <span id="slider-range-value2" style="margin-right: 10px;"></span>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-sm-12">
 
-						<div class="comments-wrapper">
-							<span>2 Comments</span>
-							<ul>
-								<li>
-									<div class="usercommentinfo-wrapper d-flex flex-row justify-content-between">
-										<div class="d-flex flex-row">
-											<img class="avatar-img" src="{% static 'img/i8.jpg' %}" style="border-radius: 50%;">
-											<div class="wrap-input200 validate-input ml-10">
-												<input class="input200" type="text" name="comment" id="user_comment"/>
-												<span class="focus-input200" data-symbol="&#xf1f0;"></span>
-											</div>
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="usercommentinfo-wrapper d-flex flex-row justify-content-between">
-										<div class="d-flex flex-row">
-											<img class="avatar-img" src="{% static 'img/i8.jpg' %}" style="border-radius: 50%;">
-											<div class="d-flex flex-column ml-10">
-												<span class="username">Username</span>
-												<span>2h</span>
-											</div>
-										</div>
-										<div class="d-flex flex-column">
-											<span class="comment-title">Many rubbish on the floor</span>
-											<span class="comment-reply">Reply</span>
-										</div>
-										<div class="follow-info">
-											<img class="heart-img" src="{% static 'img/icons-likebutton-before.png' %}">
-											<span>1.3k</span>
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="usercommentinfo-wrapper d-flex flex-row justify-content-between">
-										<div class="d-flex flex-row">
-											<img class="avatar-img" src="{% static 'img/i8.jpg' %}" style="border-radius: 50%;">
-											<div class="d-flex flex-column ml-10">
-												<span class="username">Username</span>
-												<span>2h</span>
-											</div>
-										</div>
-										<div class="d-flex flex-column">
-											<span class="comment-title">Many rubbish on the floor</span>
-											<span class="comment-reply">Reply</span>
-										</div>
-										<div class="follow-info">
-											<img class="heart-img" src="{% static 'img/icons-likebutton-before.png' %}">
-											<span>1.3k</span>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
+                                        <input type="hidden" name="min-value" value="">
+                                        <input type="hidden" name="max-value" value="">
 
+                                    </div>
+                                  </div>
+                                <p class="text-center">
+                                    <label for="upload_imgs" class="show-for-sr text-uppercase">upload multiple photos</label>
+                                    <input style="display: none;" type="file" id="upload_imgs" name="upload_files"
+                                           multiple/>
+                                </p>
+
+                            </div>
+
+                            <div class="comments-wrapper">
+
+                                <b id="cnt_comment">2</b>&nbsp;<span>Comments</span>
+                                <ul>
+                                    <li>
+                                        <div class="usercommentinfo-wrapper d-flex flex-row justify-content-between">
+                                            <div class="d-flex flex-row">
+                                                {% if user.profile.image %}
+                                                    <img class="avatar-img" src="{{ user.profile.image.url }}" style="border-radius: 50%; ">
+                                                {% else %}
+                                                    <img class="avatar-img" src="/static/img/default.png" style="border-radius: 50%; ">
+                                                {% endif %}
+
+                                                <div class="wrap-input200 validate-input ml-10">
+                                                    <input class="input200" type="text" name="comment" id="user_comment" required=""/>
+                                                    <span class="focus-input200" data-symbol="&#xf1f0;"></span>
+                                                </div>
+                                                <div>
+                                                    <input type="hidden" id="server_topic_id" name="server_topic_id" value="">
+                                                    <input type="hidden" id="ucat_id" name="ucat_id" value="">
+                                                    <button type="submit" class="sign-in-btn">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </form>
 				      </div>
 				      <div class="modal-footer">
                           <div class="text-center">
                             <button type="button" class="sign-in-btn text-uppercase" data-dismiss="modal" style="width: 40%;">Close</button>
-                            <button type="submit" class="sign-in-btn text-uppercase" style="width: 40%;">Reply</button>
                         </div>
 				      </div>
+
 				    </div>
 				  </div>
 				</div>
@@ -264,7 +301,7 @@
 					iconAnchor: [20, 40] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
 				});
             {% endif %}
-        newmarker = new L.marker([{{ topic_data.location.y }}, {{ topic_data.location.x }}],{
+            newmarker = new L.marker([{{ topic_data.location.y }}, {{ topic_data.location.x }}],{
             data:'{{ topic_data.id }}',
             icon: myIcon,
         }).on('click', markerOnClick)
@@ -281,13 +318,90 @@
                },
                dataType:'json',
                success:function (data) {
-                   console.log('ss');
-                   {#$('.lbl-1').text(data.am);#}
+                   images = [];
+                   images = data.mfilelist;
+                   {#console.log(images);#}
+                   $('#image').attr('src', images[0]);
+                   $('#profileid').attr('src', data.uimageurl);
+                   $('#profileid1').attr('src', data.uimageurl);
+                   $('#uusername').text(data.uname);
+                   $('#uusername1').text(data.uname);
+                   $('#uemoji').attr('src', data.ufeeling_url);
+                   $('#ucat').text(data.ucat);
+                   $('#usubcat').text(data.usubcat);
+                   $('#uquick').text(data.uquick);
+
+                   $('#ubno').text(data.ubno);
+                   $('#udata').text(data.udata);
+                   $('#utime').text(data.utime);
+                   $('#urno').text(data.urno);
+                   $('#urname').text(data.urname);
+                   $('#uoperator').text(data.uoperator);
+                   $('#comment-creator').text(data.ucomment);
+
+                   $('.comments-wrapper ul li:last-child').parent().append(data.html_tag);
+                   $('#cnt_comment').text(data.cnt_comment);
+                   $('#server_topic_id').val(myvar);
+                   $('#ucat_id').val(data.ucat_id);
                    $('#mapModal').modal('show');
                    $('#mapModal').css('padding-right', '0px');
                }
             });
         }
+        $('#mapModal').on('hidden.bs.modal', function () {
+           $('.comments-wrapper ul li:not(:first)').remove();
+            document.getElementById('slider-range-value1').innerHTML = 0;
+            document.getElementById('slider-range-value2').innerHTML = 10;
+            document.getElementsByName('min-value').value = 0;
+            document.getElementsByName('max-value').value = 10;
+            $('.noUi-origin.noUi-background').css('left','100%');
+            $('.noUi-origin.noUi-connect').css('left','0%');
+        });
     </script>
+    <script>
+        //IIFE - so that is not leaked
+        (function () {
+            //Array of images for slideshow
+
+            //setup a counter
+            let counter = 0;
+            //listen to button prev and next events
+            let btns = document.querySelectorAll(".btn");
+
+            let image = document.getElementById("image");
+            // console.log(image);
+            //listen on each button each
+            btns.forEach(function (btn) {
+                btn.addEventListener("click", function (event) {
+                    let value = event.target;
+                    // console.log(value);
+
+                    if (value.classList.contains("prev")) {
+                        // console.log("prev clicked");
+                        counter--;
+                        //to loop continuously
+                        if (counter < 0) {
+                            counter = images.length - 1;
+                        }
+                        // console.log(counter);
+                        //template literals to get the corresponding image value
+                        image.src = `${images[counter]}`;
+                    }
+                    if (value.classList.contains("next")) {
+                        // console.log("next clicked");
+                        counter++;
+                        //to loop continuously
+                        if (counter > images.length - 1) {
+                            counter = 0;
+                        }
+                        // console.log(counter);
+                        //template literals to get the corresponding image value
+                        image.src = `${images[counter]}`;
+                    }
+                });
+            });
+        })();
+
+</script>
 
 {% endblock js %}
