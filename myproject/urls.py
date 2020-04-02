@@ -49,16 +49,19 @@ urlpatterns = [
     url(r'^boards/(?P<pk>\d+)/$', views.TopicListView.as_view(), name='board_topics'),
     url(r'^boards/(?P<pk>\d+)/new/$', views.new_topic, name='new_topic'),
 
-    url(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/$', views.PostListView.as_view(), name='topic_posts'),
-    url(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/reply/$', views.reply_topic, name='reply_topic'),
-    url(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/posts/(?P<post_pk>\d+)/edit/$',
-        views.PostUpdateView.as_view(), name='edit_post'),
+    url(r'^posts/(?P<post_pk>\d+)/$', views.CommentListView.as_view(), name='post_comments'),
+
+    url(r'^posts/(?P<post_pk>\d+)/reply/$', views.reply_comment, name='reply_comment'),
+
+    url(r'^posts/(?P<post_pk>\d+)/comments/(?P<comment_pk>\d+)/edit/$', views.CommentUpdateView.as_view(), name='edit_comment'),
+
     url(r'^mapview/$', views.mapview, name='mapview'),
     url(r'^popluar/$', views.popular, name='popular'),
     url(r'^admin/', admin.site.urls),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', accounts_views.activate, name='activate'),
     url(r'^ajax/topicdata/$', views.topicdata, name='topicdata'),
+    url(r'^ajax/updatetopicdata/$', views.updatetopicdata, name='updatetopicdata'),
     url('test', test_views.Home.as_view()),
 ]
 

@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.urls import reverse
 from django.shortcuts import render_to_response
 from .forms import NewTopicForm, PostForm
-from .models import Board, Post, Topic, MFile
+from .models import Board, Post, Topic, MFile, Comment, Vote
 from django.contrib.gis.geos import Point
 
 from accounts.forms import UserProfileForm, ProfileForm
@@ -61,6 +61,26 @@ class PostListView(ListView):
     def get_queryset(self):
         self.topic = get_object_or_404(Topic, board__pk=self.kwargs.get('pk'), pk=self.kwargs.get('topic_pk'))
         queryset = self.topic.posts.order_by('created_at')
+        return queryset
+
+class CommentListView(ListView):
+    model = Post
+    context_object_name = 'comments'
+    template_name = 'post_comments.html'
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        session_key = 'viewed_topic_{}'.format(self.post.pk)
+        if not self.request.session.get(session_key, False):
+            # self.topic.views += 1
+            # self.topic.save()
+            self.request.session[session_key] = True
+        kwargs['post'] = self.post
+        return super().get_context_data(**kwargs)
+
+    def get_queryset(self):
+        self.post = get_object_or_404(Post, pk=self.kwargs.get('post_pk'))
+        queryset = self.post.comments.order_by('created_at')
         return queryset
 
 @login_required
@@ -168,65 +188,68 @@ def new_topic(request, pk):
     return render(request, 'new_topic.html', {'board': board, 'form': form})
 
 @login_required
-def reply_topic(request, pk, topic_pk):
-    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
+def reply_comment(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.topic = topic
-            post.created_by = request.user
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.created_by = request.user
+            comment.save()
+
+            post.last_updated = timezone.now()
             post.save()
 
-            topic.last_updated = timezone.now()
-            topic.save()
+            print(post.get_page_count())
 
-            topic_url = reverse('topic_posts', kwargs={'pk': pk, 'topic_pk': topic_pk})
-            topic_post_url = '{url}?page={page}#{id}'.format(
-                url=topic_url,
-                id=post.pk,
-                page=topic.get_page_count()
+            post_url = reverse('post_comments', kwargs={'post_pk': post_pk})
+            post_comment_url = '{url}?page={page}#{id}'.format(
+                url=post_url,
+                id=comment.pk,
+                page=post.get_page_count()
             )
 
-            return redirect(topic_post_url)
+            return redirect(post_comment_url)
     else:
+
         form = PostForm()
-    return render(request, 'reply_topic.html', {'topic': topic, 'form': form})
+    return render(request, 'reply_comment.html', {'post': post, 'form': form})
 
 
 @method_decorator(login_required, name='dispatch')
-class PostUpdateView(UpdateView):
-    model = Post
+class CommentUpdateView(UpdateView):
+    model = Comment
     fields = ('message', )
-    template_name = 'edit_post.html'
-    pk_url_kwarg = 'post_pk'
-    context_object_name = 'post'
+    template_name = 'edit_comment.html'
+    pk_url_kwarg = 'comment_pk'
+    context_object_name = 'comment'
 
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(created_by=self.request.user)
 
     def form_valid(self, form):
-        post = form.save(commit=False)
-        post.updated_by = self.request.user
-        post.updated_at = timezone.now()
-        post.save()
-        return redirect('topic_posts', pk=post.topic.board.pk, topic_pk=post.topic.pk)
+        comment = form.save(commit=False)
+        comment.updated_by = self.request.user
+        comment.updated_at = timezone.now()
+        comment.save()
+        return redirect('post_comments', post_pk=comment.post.pk)
 
 
 def mapview(request):
 
     topicdatas = Topic.objects.all()
 
-    post_list = Post.objects.all()
-    page=request.GET.get('page')
-    paginator = Paginator(post_list, 20)
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
+    # post_list = Post.objects.all()
+    # page=request.GET.get('page')
+    # paginator = Paginator(post_list, 20)
+    # try:
+    #     posts = paginator.page(page)
+    # except PageNotAnInteger:
+    #     posts = paginator.page(1)
+    # except EmptyPage:
+    #     posts = paginator.page(paginator.num_pages)
 
 
     if request.method == 'POST':
@@ -245,18 +268,49 @@ def mapview(request):
         else:
 
             return redirect('login')
-    return render(request, 'mapview.html', {'topicdatas' :  topicdatas, 'page':page, 'posts':posts,})
+    # return render(request, 'mapview.html', {'topicdatas' :  topicdatas, 'page':page, 'posts':posts,})
+    return render(request, 'mapview.html', {'topicdatas' :  topicdatas,})
+
+
+def updatetopicdata(request):
+    if request.user.is_authenticated:
+        post_value = int(request.GET.get('vote', None))
+        post_id = request.GET.get('postid', None)
+        obj, created = Vote.objects.get_or_create(post=Post.objects.get(id=post_id), created_by=request.user)
+        if post_value < 0:
+            obj.down_vote += 1
+
+        else:
+            obj.up_vote += 1
+
+        if abs(obj.up_vote - obj.down_vote) > 1:
+            return JsonResponse({'status': 'fail', })
+        else:
+            obj.save()
+
+        votes = Post.objects.get(id=post_id).vote + int(request.GET.get('vote', None))
+        if votes < 0:
+            return JsonResponse({'status': 'fail', })
+        Post.objects.filter(id=post_id).update(vote=votes)
+
+        return JsonResponse({'status':'success',})
+    else:
+        return JsonResponse({'status': 'login', })
 
 def topicdata(request):
 
     topic_id = request.GET.get('myvar', None)
     mfiles = MFile.objects.filter(topic=topic_id)
     mfilelist = []
+    # print(mfiles.count());
     for mfile in mfiles:
+        if mfile.afile.url == "/media/nomap.png" and mfiles.count() > 1:
+            continue;
         mfilelist.append(mfile.afile.url)
 
     topic = Topic.objects.get(id=topic_id)
     uname = str(topic.starter)
+
     if not topic.starter.profile.image:
         uimageurl = '/static/img/default.png'
     else:
@@ -308,7 +362,8 @@ def topicdata(request):
                 <div class="follow-info up">
                     <img class="heart-img" src='/static/img/love.png' style="max-height:20px;">
                 </div>
-                <div class="count" style="margin:10px;">0</div>
+                <div class="count" style="margin:10px;">"""+str(post.vote)+"""</div>
+                <input class="postClass" type='hidden' value='"""+str(post.id)+"""'>
                 <div class="follow-info down">
                     <img class="heart-img" src='/static/img/hate.png' style="max-height:20px;">
                 </div>

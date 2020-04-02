@@ -1,0 +1,53 @@
+{% extends 'base_pages.html' %}
+{% load static %}
+{% block title %}Edit a reply{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
+
+    {% block css %}
+        <style>
+            a:hover{
+               font: normal normal normal 14px/1 FontAwesome;
+            }
+        </style>
+    {% endblock css %}
+{% endblock %}
+
+
+{% block content %}
+<div id="popular_section" class="main-body section-gap">
+    <div class="container box_1170">
+  <form method="post" class="mb-4" novalidate>
+    {% csrf_token %}
+    {% include 'includes/form.html' %}
+    <button type="submit" class="btn btn-success">Save changes</button>
+    <a href="{% url 'post_comments' comment.post.pk %}" class="btn btn-outline-secondary" role="button">Cancel</a>
+  </form>
+
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block js %}
+    <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
+
+    <script src="{% static 'js/superfish.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/jquery.steps.js' %}"></script>
+    <script src="{% static 'js/header-scrolled.js' %}"></script>
+    <script src="{% static 'js/popular1.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/simplemde.min.js' %}"></script>
+    <script>
+        var simplemde = new SimpleMDE();
+    </script>
+{% endblock js %}
