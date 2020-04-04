@@ -37,7 +37,8 @@
               required: true,
           },
           feedback_regarding : {
-              required: true,
+              requi
+              red: true,
           },
           feedback_categories : {
               required: true,
@@ -244,12 +245,11 @@
 
     var map = L.map('googleMap', {
         center: L.latLng(3.141916, 101.6867),
-        zoom: 16
+        zoom: 13
     });
     map.invalidateSize();
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 30
     }).addTo(map);
     L.Control.geocoder().addTo(map);
     var lc = L.control.locate({

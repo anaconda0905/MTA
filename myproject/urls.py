@@ -55,7 +55,10 @@ urlpatterns = [
 
     url(r'^posts/(?P<post_pk>\d+)/comments/(?P<comment_pk>\d+)/edit/$', views.CommentUpdateView.as_view(), name='edit_comment'),
 
+    url(r'^notification/', include('notify.urls', 'notifications')),
+
     url(r'^mapview/$', views.mapview, name='mapview'),
+
     url(r'^popluar/$', views.popular, name='popular'),
     url(r'^admin/', admin.site.urls),
     url(r'^oauth/', include('social_django.urls', namespace='social')),

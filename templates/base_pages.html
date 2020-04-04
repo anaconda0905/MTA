@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load notification_tags %}
+
 
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
@@ -13,7 +15,9 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
-
+    {% block extrahead %}
+        {% include_notify_js_variables %}
+    {% endblock %}
     {% block css %}
     {% endblock css %}
 {% endblock %}
@@ -72,64 +76,30 @@
                         <li class="menu-has-children">
 							<a href="#">
 								<img src="{% static 'img/icons-notification.png' %}" alt="">
-								<span class="label label-success">8</span>
+                                {% if user.is_authenticated %}
+                                    {% if user.notifications.unread.count == 0  %}
+								        <span class="un-read-count label label-success" style="visibility:hidden; width: 22px; height: 22px;">0</span>
+                                    {% else %}
+                                        <span class="un-read-count label label-success" style="width: 22px; height: 22px;">{{ user.notifications.unread.count }}</span>
+                                    {% endif %}
+                                {% endif %}
 							</a>
 							<p>Notification</p>
-							<ul style="max-height: 300px; overflow: scroll;">
-								<li>New</li>
-								<li class="d-flex">
-									<img src="{% static 'img/i8.jpg' %}" alt="" style="display: inline-block;">
-									<a href="profile.html">
-										&nbsp;&nbsp;ABC posted a new review
-									</a>
-								</li>
-								<li class="d-flex">
-									<img src="{% static 'img/i8.jpg' %}" alt="" style="display: inline-block;">
-									<a href="profile.html">
-										&nbsp;&nbsp;ABC posted a new review
-									</a>
-								</li>
-								<li class="d-flex">
-									<img src="{% static 'img/i8.jpg' %}" alt="" style="display: inline-block;">
-									<a href="profile.html">
-										&nbsp;&nbsp;ABC posted a new review
-									</a>
-								</li>
-								<li class="d-flex">
-									<img src="{% static 'img/i8.jpg' %}" alt="" style="display: inline-block;">
-									<a href="profile.html">
-										&nbsp;&nbsp;ABC posted a new review
-									</a>
-								</li>
-								<li>Earlier</li>
-								<li class="d-flex">
-									<img src="{% static 'img/i8.jpg' %}" alt="" style="display: inline-block;">
-									<a href="profile.html">
-										&nbsp;&nbsp;ABC posted a new review
-									</a>
-								</li>
-								<li class="d-flex">
-									<img src="{% static 'img/i8.jpg' %}" alt="" style="display: inline-block;">
-									<a href="profile.html">
-										&nbsp;&nbsp;ABC posted a new review
-									</a>
-								</li>
-								<li class="d-flex">
-									<img src="{% static 'img/i8.jpg' %}" alt="" style="display: inline-block;">
-									<a href="profile.html">
-										&nbsp;&nbsp;ABC posted a new review
-									</a>
-								</li>
-								<li class="d-flex">
-									<img src="{% static 'img/i8.jpg' %}" alt="" style="display: inline-block;">
-									<a href="profile.html">
-										&nbsp;&nbsp;ABC posted a new review
-									</a>
-								</li>
+
+                            {% if user.is_authenticated %}
+							<ul class="notification-list">
+                                {% render_notifications using user.notifications.unread for box %}
+
+                                <div class="text-center">
+                                    <a href="#" style="padding-top:10px; color:#9600b3; text-transform: uppercase;">
+                                        <b>Show All Activities</b>
+                                    </a>
+                                </div>
 							</ul>
+                            {% endif %}
 						</li>
                         {% if user.is_authenticated %}
-                            <li>
+                        <li>
 							<div class="post-btn" style="padding-top: 10px;">
 								<a href="{% url 'logout' %}" class="primary-btn text-uppercase">Sign Out</a>
 							</div>
@@ -246,7 +216,55 @@
     <script src="{% static 'js/header-scrolled.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.7/js/intlTelInput.js"></script>
+    <script src ="{% static 'notify/notifyX.js' %}"></script>
+    <script>
 
+        var ajax_call = function () {
+            var the_last = $('.notification-list li').first().attr('data-nf-id');
+            var unread_count;
+            var nf_str="";
+            $.ajax({
+                type:'GET',
+                url:'notification/api/update',
+                data: {
+                    'flag': the_last,
+                },
+                cache: false,
+                dataType: 'json',
+                async:false,
+                success:function (data) {
+                    unread_count = data.unread_count;
+                    if(parseInt(data.retrieved) > 0){
+                        for (var i = 0; i < parseInt(data.retrieved); i++)
+                            nf_str += (data.notifications[i]).html;
+                    }
+                }
+            });
+            if(parseInt(unread_count) > 0){
+                $('.un-read-count').css({'visibility':'visible',});
+                $('.un-read-count').text(unread_count);
+                $('.notification-list').prepend(nf_str);
+            }
+            if(parseInt(unread_count) > 5) {
+                $('.notification-list li').attr("style", "display: none !important");
+                $('.notification-list').children('li').eq(0).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(1).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(2).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(3).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(4).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 0).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 1).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 2).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 3).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 4).attr("style", "display: d-flex");
+            }
+        };
+
+        setInterval(ajax_call, 2000);
+        $(document).ready(function () {
+            $('.notification-list li').attr("style", "display: none !important");
+        });
+    </script>
     {% block modal %}
     {% endblock %}
 {% endblock js %}

@@ -16,6 +16,7 @@ from accounts.models import Profile, Survey
 from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory, formset_factory
 from django.http import JsonResponse, HttpResponse
+from notify.signals import notify
 from django.template.loader import render_to_string
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -289,10 +290,16 @@ def updatetopicdata(request):
             obj.save()
 
         votes = Post.objects.get(id=post_id).vote + int(request.GET.get('vote', None))
+
         if votes < 0:
             return JsonResponse({'status': 'fail', })
         Post.objects.filter(id=post_id).update(vote=votes)
-
+        if not request.user.profile.image:
+            actor_url_n = '/static/img/default.png'
+        else:
+            actor_url_n = request.user.profile.image
+        notify.send(request.user, recipient=User.objects.get(username="Long"), actor=request.user, actor_url = actor_url_n , verb="Followed you",
+                    nf_type="followed_by_one_user")
         return JsonResponse({'status':'success',})
     else:
         return JsonResponse({'status': 'login', })

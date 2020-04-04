@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 
     'geoshop',
 
-    # "leaflet_storage",
+    "notify",
 
     'boards',
     'django_inlinecss'

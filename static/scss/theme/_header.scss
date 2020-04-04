@@ -152,13 +152,15 @@
     left: 30px;
     text-align: center;
     font-size: 12px;
-    padding: 4px 3px 2px 4px;
+    padding: 4px 1px 6px 1px;
     line-height: .8;
     color:$white;
     background-color: $primary-color;
     border-radius: 50%;
     font-family: 'open-sans';
     font-weight: bold;
+    width: 16px !important;
+    height: 16px !important;
 }
 
 .nav-menu p {
@@ -246,15 +248,13 @@
     margin-top: 10px;
     box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
     background: #fff;
-    border-radius: 10px;
-    border: solid 3px $light-border-color;
-
+    border-radius: 5px;
+    border: solid 1px $light-border-color;
     li:last-child{
         a{
-            border-bottom: none;    
+            border-bottom: none;
         }
     }
-
     &:before{
         position: absolute;
         top: -10px;
@@ -272,7 +272,7 @@
 }
 
 .nav-menu ul li a {
-    padding: 5px 10px 10px 5px;
+    padding : 5px 10px 10px 5px;
     color: #333;
     transition: 0.3s;
     display: block;
@@ -281,6 +281,7 @@
     text-transform: none;
     border-bottom: solid 2px $light-border-color;
 }
+
 
 .nav-menu ul li:hover>a {
     color: $primary-color;
@@ -292,6 +293,8 @@
 
 .nav-menu ul li img{
     border-radius: 50%;
+    margin: auto;
+    display: inline-block;
 }
 
 /* Mobile Nav Toggle */
@@ -409,7 +412,7 @@
     background-color: #9600b3;
     color: white;
     border-radius: 50%;
-    padding: 0px 7px;
+    text-align: center;
     font-size: 15px;
     z-index: 11;
 }
@@ -436,6 +439,7 @@
 }
 
 #mobile-nav ul .menu-has-children{
+
     li{
         color: $black;
         font-weight: bold;
@@ -450,13 +454,14 @@
             font-family: 'open-sans';
             padding-left: 8px;
         }
+
         img{
             border-radius: 50%;
             max-height: 35px;
         }       
         p{
             margin-bottom: 0px;
-        } 
+        }
     }
 }
 

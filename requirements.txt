@@ -46,3 +46,4 @@ uritemplate==0.6
 urllib3==1.25.8
 psycopg2
 django-multifilefield
+django-notify-x
