@@ -103,7 +103,12 @@
       onStepChanging: function (event, currentIndex, newIndex)
       {
           form.validate().settings.ignore = ":disabled,:hidden";
-          return form.valid();
+
+          if(newIndex<currentIndex)
+              return true;
+          else
+              return form.valid();
+
       },
 
       onStepChanged: function (event, currentIndex, priorIndex){
