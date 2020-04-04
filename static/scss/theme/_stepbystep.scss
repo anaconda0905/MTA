@@ -2,14 +2,16 @@
   position: relative;
   background-color: rgba(150,0,179,0.5);
   border-radius: 15px;
+  margin-top: 40px;
   form{
     width: 100%;
+    font-family: "Open Sans";
   }
   @media(max-width: 420px){
     display: block !important;
     margin-top: 20px !important;
     padding-top: 0;
-    padding-bottom: 5em;
+    padding-bottom: 1em;
   }
 }
 
@@ -17,7 +19,7 @@
   display: none;
 }
 #review-form{
-    min-height: 600px;
+    min-height: 510px;
     padding: 65px 75px 65px;
 
     @media(max-width: 420px){
@@ -38,7 +40,7 @@
       }
     }
     .step1-header-title{
-      font-family: 'open-sans';
+      font-family: 'Open Sans';
       font-weight: normal;
       font-size: 35px;
       color: white;
@@ -48,15 +50,14 @@
     .step2-header-title{
       width: 100%;
       text-align: center;
-      font-family: 'open-sans';
-      font-weight: normal;
+      font-family: 'Open Sans';
+      font-weight: 700;
       font-size: 30px;
       color: white;
-
       margin-bottom: 0.5em;
 
       @media(max-width: 420px){
-        font-size: 20px;
+        font-size: 28px;
       }
       @media(min-width: 420px) and (max-width: 912px){
         font-size: 25px;
@@ -199,10 +200,10 @@
 .actions {
   position: absolute;
   width: 100%;
-  bottom: 30px;
+  bottom: 70px;
   left: 30px;
   @media(max-width: 576px){
-    bottom: 10px;
+    bottom: 40px;
   }
   ul {
     display: flex;
@@ -252,10 +253,10 @@
   }
   .feedback-regarding, .incident-regarding{
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.6);
+    //background-color: rgba(255, 255, 255, 0.6);
     border-radius: 10px;
     text-align: left;
-    padding: 50px 30px;
+    padding: 40px 0px;
 
     @media(max-width: 420px){
       width: 90%;
@@ -300,7 +301,7 @@
   }
   .survey-regarding{
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.6);
+    //background-color: rgba(255, 255, 255, 0.6);
     border-radius: 10px;
     text-align: left;
     padding: 50px 0px;
@@ -327,7 +328,7 @@
     cursor: pointer;
     font-size: 1.1rem;
     user-select: none;
-    color: #000000;
+    color: white;
     letter-spacing: 1px;
     &:hover input:not(:checked) ~ .radio {
       opacity: 0.8;
@@ -380,7 +381,7 @@
   width: 0.8rem;
   background: transparent;
   border-radius: 50%;
-  border: 1px solid #000000;
+  border: 1px solid white;
   &::after {
     content: '';
     position: absolute;

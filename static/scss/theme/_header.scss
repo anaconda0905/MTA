@@ -149,18 +149,18 @@
 .nav-menu span {
     position: absolute;
     top: 0px;
-    left: 30px;
-    text-align: center;
+    left: 25px;
     font-size: 12px;
-    padding: 4px 1px 6px 1px;
+    padding: 4px 1px 2px 1px;
     line-height: .8;
     color:$white;
     background-color: $primary-color;
     border-radius: 50%;
     font-family: 'open-sans';
     font-weight: bold;
-    width: 16px !important;
-    height: 16px !important;
+    width: 20px !important;
+    height: 20px !important;
+    text-align: center;
 }
 
 .nav-menu p {
@@ -230,6 +230,7 @@
     display: inline-block;
     color: $normal-text-color;
     font-weight: 500;
+    font-family: "Open Sans";
     font-size: 12px;
     text-transform: uppercase;
     outline: none;
@@ -393,7 +394,7 @@
     display: block;
     outline: none;
     font-weight: bold;
-    font-family: 'open-sans';
+    font-family: 'open sans';
 }
 
 #mobile-nav ul li a img{
@@ -449,9 +450,9 @@
         a{
             color: #000;
             text-transform: uppercase !important;
-            font-size: 14px;
+            font-size: 17px;
             font-weight: normal;
-            font-family: 'open-sans';
+            font-family: 'open sans';
             padding-left: 8px;
         }
 

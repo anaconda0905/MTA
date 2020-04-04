@@ -953,13 +953,13 @@
     position: relative;
     background-color: rgba(150,0,179,0.5);
     border-radius: 15px;
-    padding-top: 20em;
-    padding-bottom: 20em;
-
+    padding-top: 8em;
+    padding-bottom: 9em;
+    margin-top: 45px;
     .review-content{
       h1{
         color: $white;
-        font-family: 'open-sans';
+        font-family: 'Open Sans';
         font-size: 3rem;
         font-weight: bold;
         @media (max-width: 420px) {
@@ -971,16 +971,16 @@
         font-size: 1.3em;
         word-break: break-word;
         word-spacing: normal;
-        font-family: 'open-sans';
+        font-family: 'open sans';
         font-weight: 100;
       }
     }
 
     @media(max-width: 420px){
       display: block !important;
-      margin-top: 20px !important;
-      padding-top: 12em;
-      padding-bottom: 12em;
+      margin-top: 23px !important;
+      padding-top: 6em;
+      padding-bottom: 6em;
     }
   }
 }

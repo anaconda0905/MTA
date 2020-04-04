@@ -605,8 +605,9 @@ th {
   border: 1px solid #e9e9e9;
   color: #fff !important;
   display: inline-block;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 500;
+  font-family: "Open Sans";
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
@@ -690,7 +691,7 @@ th {
   src: local("Open Sans Bold"), local("OpenSans-Bold"), url(../fonts/open-sans/OpenSans-Bold.ttf) format("woff"); }
 @font-face {
   font-family: 'Open Sans';
-  font-style: normal;
+  font-style: italic;
   font-weight: 700;
   src: local("Open Sans BoldItalic"), local("OpenSans-BoldItalic"), url(../fonts/open-sans/OpenSans-BoldItalic.ttf) format("woff"); }
 @font-face {
@@ -1749,7 +1750,7 @@ h6 {
 .started-btn {
   background: rgba(150, 0, 179, 0.5);
   color: #fff;
-  line-height: 24px;
+  line-height: 35px;
   border-radius: 25px;
   border: 1px solid #fff;
   display: inline-block;
@@ -1758,7 +1759,7 @@ h6 {
   font-weight: 500;
   cursor: pointer;
   position: relative;
-  font-family: 'open-sans'; }
+  font-family: 'open sans'; }
   .started-btn:hover {
     transform: translateY(4px) scale(1.1); }
 
@@ -1819,10 +1820,11 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0px; }
 
 p {
-  font-family: "Open Sans" sans-serif;
-  font-size: 14px;
+  font-family: "Open Sans";
+  font-size: 16px !important;
   line-height: 1.7;
-  color: #666666;
+  font-weight: 500 !important;
+  color: black;
   margin: 0px; }
 
 ul, li {
@@ -2054,16 +2056,16 @@ iframe {
   border-bottom: 2px solid #000; }
 
 .label-input200 {
-  font-family: 'open-sans';
+  font-family: 'Open Sans';
   font-size: 18px;
   font-weight: bold;
-  color: #333333;
+  color: white;
   line-height: 1.5; }
 
 .input200 {
-  font-family: sans-serif;
+  font-family: 'Open Sans';
   font-size: 16px;
-  color: #9600b3;
+  color: lightgrey;
   line-height: 1;
   display: block;
   width: 100%;
@@ -3055,18 +3057,18 @@ body {
 .nav-menu span {
   position: absolute;
   top: 0px;
-  left: 30px;
-  text-align: center;
+  left: 25px;
   font-size: 12px;
-  padding: 4px 1px 6px 1px;
+  padding: 4px 1px 2px 1px;
   line-height: .8;
   color: #fff;
   background-color: #9600b3;
   border-radius: 50%;
   font-family: 'open-sans';
   font-weight: bold;
-  width: 16px !important;
-  height: 16px !important; }
+  width: 20px !important;
+  height: 20px !important;
+  text-align: center; }
 
 .nav-menu p {
   text-align: center; }
@@ -3113,6 +3115,7 @@ body {
   display: inline-block;
   color: #333333;
   font-weight: 500;
+  font-family: "Open Sans";
   font-size: 12px;
   text-transform: uppercase;
   outline: none; }
@@ -3226,7 +3229,7 @@ body {
   display: block;
   outline: none;
   font-weight: bold;
-  font-family: 'open-sans'; }
+  font-family: 'open sans'; }
 
 #mobile-nav ul li a img {
   position: absolute;
@@ -3273,9 +3276,9 @@ body {
   #mobile-nav ul .menu-has-children li a {
     color: #000;
     text-transform: uppercase !important;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: normal;
-    font-family: 'open-sans';
+    font-family: 'open sans';
     padding-left: 8px; }
   #mobile-nav ul .menu-has-children li img {
     border-radius: 50%;
@@ -3315,7 +3318,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     font-size: 30px;
     padding: 15px 30px;
     font-weight: 700;
-    font-family: open-sans sans-serif; }
+    font-family: "Open Sans"; }
     .banner-area .primary-btn:hover {
       color: #fff !important;
       background-color: #9600b3; }
@@ -4232,11 +4235,12 @@ body.mobile-nav-active #mobile-nav-toggle {
     position: relative;
     background-color: rgba(150, 0, 179, 0.5);
     border-radius: 15px;
-    padding-top: 20em;
-    padding-bottom: 20em; }
+    padding-top: 8em;
+    padding-bottom: 9em;
+    margin-top: 45px; }
     #review_section #review_detail_home .review-content h1 {
       color: #fff;
-      font-family: 'open-sans';
+      font-family: 'Open Sans';
       font-size: 3rem;
       font-weight: bold; }
       @media (max-width: 420px) {
@@ -4247,14 +4251,14 @@ body.mobile-nav-active #mobile-nav-toggle {
       font-size: 1.3em;
       word-break: break-word;
       word-spacing: normal;
-      font-family: 'open-sans';
+      font-family: 'open sans';
       font-weight: 100; }
     @media (max-width: 420px) {
       #review_section #review_detail_home {
         display: block !important;
-        margin-top: 20px !important;
-        padding-top: 12em;
-        padding-bottom: 12em; } }
+        margin-top: 23px !important;
+        padding-top: 6em;
+        padding-bottom: 6em; } }
 
 .filter-wrapper {
   width: 100% !important;
@@ -4504,21 +4508,23 @@ body.mobile-nav-active #mobile-nav-toggle {
 #steps_review_detail_home {
   position: relative;
   background-color: rgba(150, 0, 179, 0.5);
-  border-radius: 15px; }
+  border-radius: 15px;
+  margin-top: 40px; }
   #steps_review_detail_home form {
-    width: 100%; }
+    width: 100%;
+    font-family: "Open Sans"; }
   @media (max-width: 420px) {
     #steps_review_detail_home {
       display: block !important;
       margin-top: 20px !important;
       padding-top: 0;
-      padding-bottom: 5em; } }
+      padding-bottom: 1em; } }
 
 .wizard > .steps .current-info, .wizard > .steps .number {
   display: none; }
 
 #review-form {
-  min-height: 600px;
+  min-height: 510px;
   padding: 65px 75px 65px; }
   @media (max-width: 420px) {
     #review-form {
@@ -4534,7 +4540,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     #review-form .emoticon-wrapper .emoticon {
       max-height: 100px; }
   #review-form .step1-header-title {
-    font-family: 'open-sans';
+    font-family: 'Open Sans';
     font-weight: normal;
     font-size: 35px;
     color: white;
@@ -4543,14 +4549,14 @@ body.mobile-nav-active #mobile-nav-toggle {
   #review-form .step2-header-title {
     width: 100%;
     text-align: center;
-    font-family: 'open-sans';
-    font-weight: normal;
+    font-family: 'Open Sans';
+    font-weight: 700;
     font-size: 30px;
     color: white;
     margin-bottom: 0.5em; }
     @media (max-width: 420px) {
       #review-form .step2-header-title {
-        font-size: 20px; } }
+        font-size: 28px; } }
     @media (min-width: 420px) and (max-width: 912px) {
       #review-form .step2-header-title {
         font-size: 25px; } }
@@ -4648,11 +4654,11 @@ body.mobile-nav-active #mobile-nav-toggle {
 .actions {
   position: absolute;
   width: 100%;
-  bottom: 30px;
+  bottom: 70px;
   left: 30px; }
   @media (max-width: 576px) {
     .actions {
-      bottom: 10px; } }
+      bottom: 40px; } }
   .actions ul {
     display: flex;
     flex-direction: row; }
@@ -4686,10 +4692,9 @@ body.mobile-nav-active #mobile-nav-toggle {
   max-height: 100px; }
 .content .feedback-regarding, .content .incident-regarding {
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 10px;
   text-align: left;
-  padding: 50px 30px; }
+  padding: 40px 0px; }
   @media (max-width: 420px) {
     .content .feedback-regarding, .content .incident-regarding {
       width: 90%;
@@ -4720,7 +4725,6 @@ body.mobile-nav-active #mobile-nav-toggle {
       margin-top: 20px; } }
 .content .survey-regarding {
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 10px;
   text-align: left;
   padding: 50px 0px; }
@@ -4742,7 +4746,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     cursor: pointer;
     font-size: 1.1rem;
     user-select: none;
-    color: #000000;
+    color: white;
     letter-spacing: 1px; }
     .bulgy-radios label:hover input:not(:checked) ~ .radio {
       opacity: 0.8; }
@@ -4774,7 +4778,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   width: 0.8rem;
   background: transparent;
   border-radius: 50%;
-  border: 1px solid #000000; }
+  border: 1px solid white; }
   .radio::after {
     content: '';
     position: absolute;

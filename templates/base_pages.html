@@ -3,7 +3,6 @@
 {% load static %}
 {% load notification_tags %}
 
-
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
@@ -14,10 +13,10 @@
     <link rel="stylesheet" href="{% static 'vendor/animate/animate.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
     {% block extrahead %}
         {% include_notify_js_variables %}
     {% endblock %}
+
     {% block css %}
     {% endblock css %}
 {% endblock %}
@@ -92,7 +91,7 @@
 
                                 <div class="text-center">
                                     <a href="#" style="padding-top:10px; color:#9600b3; text-transform: uppercase;">
-                                        <b>Show All Activities</b>
+                                        <b style="font-family: 'Open Sans';">Show All Activities</b>
                                     </a>
                                 </div>
 							</ul>
@@ -216,55 +215,7 @@
     <script src="{% static 'js/header-scrolled.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.7/js/intlTelInput.js"></script>
-    <script src ="{% static 'notify/notifyX.js' %}"></script>
-    <script>
 
-        var ajax_call = function () {
-            var the_last = $('.notification-list li').first().attr('data-nf-id');
-            var unread_count;
-            var nf_str="";
-            $.ajax({
-                type:'GET',
-                url:'notification/api/update',
-                data: {
-                    'flag': the_last,
-                },
-                cache: false,
-                dataType: 'json',
-                async:false,
-                success:function (data) {
-                    unread_count = data.unread_count;
-                    if(parseInt(data.retrieved) > 0){
-                        for (var i = 0; i < parseInt(data.retrieved); i++)
-                            nf_str += (data.notifications[i]).html;
-                    }
-                }
-            });
-            if(parseInt(unread_count) > 0){
-                $('.un-read-count').css({'visibility':'visible',});
-                $('.un-read-count').text(unread_count);
-                $('.notification-list').prepend(nf_str);
-            }
-            if(parseInt(unread_count) > 5) {
-                $('.notification-list li').attr("style", "display: none !important");
-                $('.notification-list').children('li').eq(0).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(1).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(2).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(3).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(4).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 0).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 1).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 2).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 3).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 4).attr("style", "display: d-flex");
-            }
-        };
-
-        setInterval(ajax_call, 2000);
-        $(document).ready(function () {
-            $('.notification-list li').attr("style", "display: none !important");
-        });
-    </script>
     {% block modal %}
     {% endblock %}
 {% endblock js %}

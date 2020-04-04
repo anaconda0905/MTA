@@ -37,8 +37,7 @@
               required: true,
           },
           feedback_regarding : {
-              requi
-              red: true,
+              required:true,
           },
           feedback_categories : {
               required: true,

@@ -1,4 +1,5 @@
 {% load static %}
+{% load notification_tags %}
 <!DOCTYPE html>
 <html>
 
@@ -11,10 +12,13 @@
     <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
 	<meta name="author" content="coder">
 	<meta name="description" content="">
-
+    <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
     {% block stylesheet %}
 
 
+    {% endblock %}
+    {% block extrahead %}
+        {% include_notify_js_variables %}
     {% endblock %}
 </head>
 
@@ -35,6 +39,55 @@
     {% block js %}
 
     {% endblock js %}
+    <script src ="{% static 'notify/notifyX.js' %}"></script>
+    <script>
+
+        var ajax_call = function () {
+            var the_last = $('.notification-list li').first().attr('data-nf-id');
+            var unread_count;
+            var nf_str="";
+            $.ajax({
+                type:'GET',
+                url:'/notification/api/update',
+                data: {
+                    'flag': the_last,
+                },
+                cache: false,
+                dataType: 'json',
+                async:false,
+                success:function (data) {
+                    unread_count = data.unread_count;
+                    if(parseInt(data.retrieved) > 0){
+                        for (var i = 0; i < parseInt(data.retrieved); i++)
+                            nf_str += (data.notifications[i]).html;
+                    }
+                }
+            });
+            if(parseInt(unread_count) > 0){
+                $('.un-read-count').css({'visibility':'visible',});
+                $('.un-read-count').text(unread_count);
+                $('.notification-list').prepend(nf_str);
+            }
+            if(parseInt(unread_count) > 5) {
+                $('.notification-list li').attr("style", "display: none !important");
+                $('.notification-list').children('li').eq(0).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(1).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(2).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(3).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(4).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 0).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 1).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 2).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 3).attr("style", "display: d-flex");
+                $('.notification-list').children('li').eq(parseInt(unread_count) + 4).attr("style", "display: d-flex");
+            }
+        };
+
+        setInterval(ajax_call, 2000);
+        $(document).ready(function () {
+            $('.notification-list li').attr("style", "display: none !important");
+        });
+    </script>
 
 </body>
 

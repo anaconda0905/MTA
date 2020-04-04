@@ -1222,7 +1222,7 @@ h6 {
 .started-btn {
     background: rgba(150,0,179,0.5);
     color: $white;
-    line-height: 24px;
+    line-height: 35px;
     border-radius: 25px;
     border: 1px solid $white;
     display: inline-block;
@@ -1231,7 +1231,7 @@ h6 {
     font-weight: 500;
     cursor: pointer;
     position: relative;
-    font-family: 'open-sans';
+    font-family: 'open sans';
     &:hover{
         transform: translateY(4px) scale(1.1);
     }
@@ -1321,10 +1321,11 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 p {
-    font-family: "Open Sans" sans-serif;
-    font-size: 14px;
+    font-family: "Open Sans";
+    font-size: 16px !important;
     line-height: 1.7;
-    color: #666666;
+    font-weight: 500 !important;
+    color: black;
     margin: 0px;
 }
 
@@ -1561,17 +1562,18 @@ iframe {
 }
 
 .label-input200 {
-  font-family: 'open-sans';
+  font-family: 'Open Sans';
   font-size: 18px;
   font-weight: bold;
-  color: #333333;
+  color: white;
   line-height: 1.5;
 }
 
 .input200 {
-    font-family: sans-serif;
+    font-family: 'Open Sans';
     font-size: 16px;
-    color: $primary-color;
+    //color: $primary-color;
+    color:lightgrey;
     line-height: 1;
     display: block;
     width: 100%;
