@@ -20,7 +20,7 @@
 }
 #review-form{
     min-height: 510px;
-    padding: 65px 75px 65px;
+    padding: 50px 75px 65px;
 
     @media(max-width: 420px){
       min-height: 500px;
@@ -274,10 +274,10 @@
   }
   .review-regarding{
     // width: 100%;
-    background-color: rgba(255, 255, 255, 0.6);
+    //background-color: rgba(255, 255, 255, 0.6);
     border-radius: 10px;
     text-align: left;
-    margin-top: 40px;
+    //margin-top: 40px;
     padding: 50px 20px;  
     @media(max-width: 420px){
       // width: 90%;

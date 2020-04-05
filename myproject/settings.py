@@ -204,5 +204,5 @@ PHONENUMBER_DEFAULT_REGION = 'MY'
 # PHONENUMBER_DEFAULT_REGION = 'US'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+DATE_INPUT_FORMATS = ('%Y-%m-%d','%m-%d-%Y')
 GDAL_LIBRARY_PATH = r'D:\workspace\Django\django-venv\Lib\site-packages\osgeo\gdal300.dll'

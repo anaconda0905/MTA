@@ -249,7 +249,7 @@
 
     var map = L.map('googleMap', {
         center: L.latLng(3.141916, 101.6867),
-        zoom: 13
+        zoom: 15
     });
     map.invalidateSize();
 
@@ -290,7 +290,12 @@
             document.getElementById('longitude').value = marker.getLatLng().lng;
             $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + marker.getLatLng().lat + '&lon=' + marker.getLatLng().lng, function (data) {
                 if (data.address.road)
+                {
                     document.getElementById('locname').value = data.address.road;
+                    $('#locname').addClass('has-val');
+
+                }
+
             });
             // marker.bindPopup('I am in Baltimore.<br> Looking for Stop.');
             // marker.openPopup();

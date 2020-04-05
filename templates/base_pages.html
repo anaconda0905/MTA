@@ -87,6 +87,7 @@
 
                             {% if user.is_authenticated %}
 							<ul class="notification-list">
+                            <div class="scroll-div" style="overflow:auto; max-height: 265px;">
                                 {% render_notifications using user.notifications.unread for box %}
 
                                 <div class="text-center">
@@ -94,6 +95,7 @@
                                         <b style="font-family: 'Open Sans';">Show All Activities</b>
                                     </a>
                                 </div>
+                            </div>
 							</ul>
                             {% endif %}
 						</li>

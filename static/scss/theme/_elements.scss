@@ -1327,6 +1327,7 @@ p {
     font-weight: 500 !important;
     color: black;
     margin: 0px;
+    text-align: center;
 }
 
 ul, li {
@@ -1785,7 +1786,7 @@ iframe {
   font-family: FontAwesome;
   display: block;
   position: absolute;
-  color: $primary-color;
+  color: red;
   font-size: 16px;
   bottom: calc((100% - 20px) / 2);
   -webkit-transform: translateY(50%);

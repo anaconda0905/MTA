@@ -43,7 +43,7 @@
     <script>
 
         var ajax_call = function () {
-            var the_last = $('.notification-list li').first().attr('data-nf-id');
+            var the_last = $('.notification-list .scroll-div li').first().attr('data-nf-id');
             var unread_count;
             var nf_str="";
             $.ajax({
@@ -66,27 +66,12 @@
             if(parseInt(unread_count) > 0){
                 $('.un-read-count').css({'visibility':'visible',});
                 $('.un-read-count').text(unread_count);
-                $('.notification-list').prepend(nf_str);
-            }
-            if(parseInt(unread_count) > 5) {
-                $('.notification-list li').attr("style", "display: none !important");
-                $('.notification-list').children('li').eq(0).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(1).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(2).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(3).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(4).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 0).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 1).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 2).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 3).attr("style", "display: d-flex");
-                $('.notification-list').children('li').eq(parseInt(unread_count) + 4).attr("style", "display: d-flex");
+                $('.notification-list .scroll-div').prepend(nf_str);
             }
         };
 
         setInterval(ajax_call, 2000);
-        $(document).ready(function () {
-            $('.notification-list li').attr("style", "display: none !important");
-        });
+
     </script>
 
 </body>

@@ -3,13 +3,16 @@
 {% block title %}Create review{% endblock %}
 
 {% block stylesheet %}
+
     <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-image-checkbox.css' %}">
+
     <link rel="stylesheet" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -28,10 +31,10 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
+
 
     {% block css %}
         <style>
@@ -261,7 +264,7 @@
 										    <span class="label-input200">
 										    	BUS NO
 										    </span>
-                                        <input class="input200" type="text" name="bus_no" id="bus_no"/>
+                                        <input class="input200" type="text" name="bus_no" id="bus_no" style="text-transform: uppercase;"/>
                                         <span class="focus-input200" data-symbol="&#xf1f0;"></span>
                                     </div>
 
@@ -269,15 +272,18 @@
 										    <span class="label-input200">
 										    	INCIDENT DATE
 										    </span>
-                                        <input class="input200" type="date" name="incident_date" id="incident_date"/>
+
+                                        <input class="input200" type="text" name="incident_date" id="incident_date"/>
+
                                         <span class="focus-input200" data-symbol="&#xf1f0;"></span>
+
                                     </div>
 
                                     <div class="wrap-input200 validate-input">
 										    <span class="label-input200">
 										    	INCIDENT TIME
 										    </span>
-                                        <input class="input200" type="time" name="incident_time" id="incident_time"/>
+                                        <input class="input200" type="time" name="incident_time" placeholder="YYYY-MM-DD" id="incident_time"/>
                                         <span class="focus-input200" data-symbol="&#xf1f0;"></span>
                                     </div>
                                 </div>
@@ -311,11 +317,12 @@
 
                                     </div>
                                     <br>
-                                    <div class="wrap-input200 validate-input">
-										    <span class="label-input200">
-										    	ADDRESS
+                                    <div class="wrap-input200 validate-input" style="border-bottom: none !important;">
+										    <span class="label-input200" style="text-transform: uppercase;">
+										    	Incident Location
 										    </span>
-                                        <input class="input200" type="text" name="locname" id="locname" readonly/>
+                                        <input class="input200" type="text" placeholder="Drop over the map to get address." name="locname" id="locname" readonly/>
+
                                         <input id="latitude" name="lat" type="text" style="display: none"/>
                                         <input id="longitude" name="lon" type="text" style="display: none"/>
                                     </div>
@@ -372,7 +379,7 @@
                                     <div class="carousel-wrapper">
                                     </div>
                                     <div class="d-flex flex-row mt-20">
-                                        <input type="checkbox" class="checkbox bounce" name="audit" id="checkbox">
+                                        <input type="checkbox" class="checkbox bounce" name="audit" style="width: 23px;" id="checkbox">
                                         <label for="checkbox" class="text-uppercase text-black">request for
                                             audit/investigate</label>
                                     </div>
@@ -399,10 +406,48 @@
     <script src="{% static 'js/jquery.steps.js' %}"></script>
     <script src="{% static 'js/header-scrolled.js' %}"></script>
     <script src="{% static 'js/review1.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+    <script>
+    var today = new Date();
+    var dd = today.getDate();
 
-<script>
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+    if(dd<10)
+    {
+        dd='0'+dd;
+    }
 
-</script>
+    if(mm<10)
+    {
+        mm='0'+mm;
+    }
+    today = yyyy +'-'+mm+'-'+dd;
+
+    $('#incident_date').val(today);
+    $('#incident_date').change(function () {
+
+        if( $('#incident_date').val() > today) {
+            alert("Cannot exceed current date!");
+            $('#incident_date').val(today);
+        }
+    });
+
+    $('#incident_date').datepicker({
+      format: 'yyyy-mm-dd',
+    });
+
+    $('#bus_no').on('input', function () {
+        var string_bus_no = $('#bus_no').val();
+        {#remove all whitespace#}
+        if(/\s/.test(string_bus_no)){
+            alert("No spacing allowed for Bus no!");
+            $('#bus_no').val(string_bus_no.replace(/\s/g, ''));
+        }
+    });
+
+
+    </script>
     {% block modal %}
     <div class="modal fade" id="reviewSubmitModalForm" tabindex="-2" role="dialog" aria-labelledby="myModalLabel1"
              aria-hidden="true">
@@ -427,4 +472,3 @@
     </div>
     {% endblock %}
 {% endblock js %}
-

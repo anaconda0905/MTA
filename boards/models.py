@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 from django.utils.html import mark_safe
 from django.utils.text import Truncator
-
+from datetime import date
 from markdown import markdown
 
 
