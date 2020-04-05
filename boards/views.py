@@ -157,6 +157,12 @@ def review(request):
 
         data = Topic.objects.filter(starter=request.user).order_by('-id')[:8]
         files = MFile.objects.all()
+        if not request.user.profile.image:
+            actor_url_n = '/static/img/default.png'
+        else:
+            actor_url_n = request.user.profile.image
+        notify.send(request.user, recipient_list=list(User.objects.exclude(id=request.user.id)), actor=request.user, actor_url = actor_url_n , verb="posted a new review.",
+                    nf_type="followed_by_one_user")
 
         return render(request, "account_update.html", {
                         "user_form": user_form,
@@ -405,3 +411,8 @@ def popular(request):
         print('yes')
 
     return render(request, 'popular.html')
+
+@login_required
+def mynotification(request):
+    return render(request, 'mynotification.html')
+

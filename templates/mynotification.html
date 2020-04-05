@@ -1,0 +1,53 @@
+{% extends 'base_pages.html' %}
+{% load static %}
+{% load i18n %}
+{% load notification_tags %}
+{% block title %}Get started{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-image-checkbox.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    {% block css %}
+    {% endblock css %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- Start main body Area -->
+	<div id="popular_section" class="main-body section-gap">
+		<div class="container box_1170">
+
+            <ul class="mynotification-list">
+                <div class="d-flex">
+                <h2>My notifications</h2>
+                <button class="mark-all-notifications" data-mark-action="read" onclick="window.location.reload();">Mark all as read <i class="fa fa-bell-slash-o"></i>&nbsp;</button>
+                </div>
+                {% if user.notifications.unread %}
+                {% render_notifications using user.notifications.unread for box %}
+                {% else %}
+                    <span>No new notification yet.</span>
+                {% endif %}
+                <br>
+                {% if user.notifications.read %}
+                {% render_notifications using user.notifications.read for box %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/superfish.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/jquery.steps.js' %}"></script>
+    <script src="{% static 'js/header-scrolled.js' %}"></script>
+    <script src="{% static 'js/survey1.js' %}"></script>
+
+{% endblock js %}

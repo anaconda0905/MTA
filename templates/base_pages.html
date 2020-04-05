@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% load static %}
 {% load notification_tags %}
 
@@ -87,7 +86,14 @@
 
                             {% if user.is_authenticated %}
 							<ul class="notification-list">
-                            <div class="scroll-div" style="overflow:auto; max-height: 265px;">
+                            <div class="text-right">
+                                <button class="mark-all-notifications" data-mark-action="read" onclick="window.location.reload();">Mark all as read <i class="fa fa-bell-slash-o"></i>&nbsp;</button>
+
+                                <button class="mark-all-notifications" onclick="window.location.href = '/mynotification/all';">Setting <i class="fa fa-envelope-o"></i></button>
+
+                            </div>
+                            <div class="scroll-div">
+
                                 {% render_notifications using user.notifications.unread for box %}
 
                                 <div class="text-center">
@@ -118,7 +124,7 @@
 						</li>
                         {% else %}
                         <li>
-							<div class="post-btn" style="padding-top: 10px;">
+							<div class="post-btn" style="padding-top: 10px; ">
 								<a href="{% url 'login' %}" class="primary-btn text-uppercase">Sign In</a>
 							</div>
 						</li>

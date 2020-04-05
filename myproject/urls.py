@@ -57,6 +57,8 @@ urlpatterns = [
 
     url(r'^notification/', include('notify.urls', 'notifications')),
 
+    url(r'^mynotification/all/$', views.mynotification, name="mynotification"),
+
     url(r'^mapview/$', views.mapview, name='mapview'),
 
     url(r'^popluar/$', views.popular, name='popular'),

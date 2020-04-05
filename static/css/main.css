@@ -3087,7 +3087,8 @@ body {
 
 .nav-menu ul li {
   min-width: 90px;
-  text-align: center; }
+  text-align: center;
+  font-family: "Open Sans"; }
 
 /* Nav Menu Arrows */
 .sf-arrows .sf-with-ul {
@@ -3146,15 +3147,35 @@ body {
 .nav-menu ul li {
   transition: 0.3s; }
 
+.nav-menu .mark-all-notifications {
+  color: #9600b3;
+  font-family: "Open Sans"; }
+
+.nav-menu .notification-list {
+  width: 330px; }
+
+.nav-menu ul li .timesince {
+  margin-top: -21px;
+  position: absolute;
+  text-align: left;
+  margin-left: -110px;
+  font-family: "Open Sans";
+  font-weight: inherit;
+  font-size: 10px;
+  color: black; }
+
 .nav-menu ul li a {
   padding: 5px 10px 10px 5px;
   color: #333;
   transition: 0.3s;
   display: block;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: inherit;
   text-transform: none;
-  border-bottom: solid 2px #e6e6e6; }
+  border-bottom: solid 1px #e6e6e6;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis; }
 
 .nav-menu ul li:hover > a {
   color: #9600b3; }
@@ -3165,7 +3186,13 @@ body {
 .nav-menu ul li img {
   border-radius: 50%;
   margin: auto;
-  display: inline-block; }
+  display: inline-block;
+  width: 25px;
+  margin: 10px 5px 0px 2px; }
+
+.nav-menu .scroll-div {
+  overflow: auto;
+  max-height: 200px; }
 
 /* Mobile Nav Toggle */
 #mobile-nav-toggle {
@@ -3197,7 +3224,8 @@ body {
 
 #mobile-nav .post-btn {
   padding-top: 0px !important;
-  padding-left: 15px; }
+  padding-left: 15px;
+  text-align: center; }
 
 #mobile-nav ul {
   padding: 0;
@@ -3231,7 +3259,8 @@ body {
   outline: none;
   font-weight: bold;
   font-family: 'open sans';
-  text-align: left; }
+  text-align: left !important;
+  left: 30px; }
 
 #mobile-nav ul li a img {
   position: absolute;
@@ -3272,16 +3301,17 @@ body {
 #mobile-nav ul .menu-has-children li {
   color: #000;
   font-weight: bold;
-  padding-left: 30px;
+  padding-left: 50px;
   padding-top: 5px;
   padding-bottom: 5px; }
   #mobile-nav ul .menu-has-children li a {
     color: #000;
     text-transform: uppercase !important;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: normal;
     font-family: 'open sans';
-    padding-left: 8px; }
+    padding-left: 8px;
+    line-height: 18px; }
   #mobile-nav ul .menu-has-children li img {
     border-radius: 50%;
     max-height: 35px; }
@@ -4506,6 +4536,61 @@ body.mobile-nav-active #mobile-nav-toggle {
     background: #B8B8B8; }
   .vote-wrapper [disabled].noUi-origin, .vote-wrapper [disabled] .noUi-handle {
     cursor: not-allowed; }
+
+.mynotification-list {
+  padding: 10px;
+  margin-top: 10px;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  background: #fff;
+  border-radius: 5px;
+  border: solid 2px #e6e6e6;
+  min-height: 550px; }
+  .mynotification-list span {
+    font-family: "Open Sans";
+    text-align: center;
+    padding: 30px; }
+  .mynotification-list .mark-all-notifications {
+    font-family: "Open Sans";
+    color: #9600b3;
+    margin-left: 650px; }
+    @media (max-width: 420px) {
+      .mynotification-list .mark-all-notifications {
+        margin-left: 0px; } }
+  .mynotification-list h2 {
+    font-family: "Open Sans";
+    padding: 20px; }
+  .mynotification-list li {
+    transition: 0.3s;
+    font-family: "Open Sans";
+    text-align: left; }
+    .mynotification-list li a {
+      font-family: "Open Sans";
+      padding: 5px 10px 10px 5px;
+      color: #333;
+      transition: 0.3s;
+      display: block;
+      font-size: 18px;
+      font-weight: inherit;
+      text-transform: none;
+      border-bottom: solid 1px #e6e6e6;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+    .mynotification-list li img {
+      border-radius: 50%;
+      margin: auto;
+      display: inline-block;
+      width: 25px;
+      margin: 10px 5px 0px 2px; }
+    .mynotification-list li .timesince {
+      margin-top: -21px;
+      position: absolute;
+      text-align: left;
+      margin-left: 40px;
+      font-family: "Open Sans";
+      font-weight: inherit;
+      font-size: 10px;
+      color: black; }
 
 #steps_review_detail_home {
   position: relative;
