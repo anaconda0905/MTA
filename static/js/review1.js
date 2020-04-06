@@ -251,6 +251,8 @@
         center: L.latLng(3.141916, 101.6867),
         zoom: 15
     });
+
+
     map.invalidateSize();
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -269,9 +271,14 @@
         rememberLong = 174.82082;
     }
 
+    var myIcon = L.icon({
+					iconUrl: "/static/images/add.png", // the url of the img
+					iconSize: [40, 40],
+					iconAnchor: [20, 20] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
+				});
 
     var marker = L.marker([rememberLat, rememberLong], {
-        draggable: true
+        draggable: true, icon:myIcon
     }).addTo(map);
     marker.on('dragend', function (e) {
         updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
@@ -297,8 +304,8 @@
                 }
 
             });
-            // marker.bindPopup('I am in Baltimore.<br> Looking for Stop.');
-            // marker.openPopup();
+            marker.bindPopup('<b>I am here</b>');
+            marker.openPopup();
             map.panTo([lat, lng]);
         }
     }

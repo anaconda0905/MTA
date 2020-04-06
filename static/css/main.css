@@ -4562,7 +4562,8 @@ body.mobile-nav-active #mobile-nav-toggle {
   .mynotification-list li {
     transition: 0.3s;
     font-family: "Open Sans";
-    text-align: left; }
+    text-align: left;
+    margin: 13px; }
     .mynotification-list li a {
       font-family: "Open Sans";
       padding: 5px 10px 10px 5px;
@@ -4591,6 +4592,8 @@ body.mobile-nav-active #mobile-nav-toggle {
       font-weight: inherit;
       font-size: 10px;
       color: black; }
+  .mynotification-list li.unread {
+    background-color: lavender; }
 
 #steps_review_detail_home {
   position: relative;

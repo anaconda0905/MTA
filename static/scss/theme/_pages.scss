@@ -1361,6 +1361,7 @@
     transition: 0.3s;
     font-family: "Open Sans";
     text-align: left;
+    margin: 13px;
     a {
       font-family: "Open Sans";
       padding: 5px 10px 10px 5px;
@@ -1395,5 +1396,9 @@
 
     }
 
+
+  }
+  li.unread {
+    background-color: lavender;
   }
 }
