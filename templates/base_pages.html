@@ -86,18 +86,19 @@
 
                             {% if user.is_authenticated %}
 							<ul class="notification-list">
-                            <div class="text-right">
-                                <button class="mark-all-notifications" data-mark-action="read" onclick="window.location.reload();">Mark all as read <i class="fa fa-bell-slash-o"></i>&nbsp;</button>
-
-                                <button class="mark-all-notifications" onclick="window.location.href = '/mynotification/all';">Setting <i class="fa fa-envelope-o"></i></button>
-
+                            <div class="text-center">
+                                <button class="mark-all-notifications" data-mark-action="read" onclick="window.location.href = '/mynotification/all';">Mark all as read <i class="fa fa-bell-slash-o"></i>&nbsp;</button>
+                                <button class="mark-all-notifications" >Setting <i class="fa fa-envelope-o"></i></button>
                             </div>
                             <div class="scroll-div">
-
-                                {% render_notifications using user.notifications.unread for box %}
+                                {% if user.notifications.unread %}
+                                    {% render_notifications using user.notifications.unread for box %}
+                                {% else %}
+                                    <li>You have no new notification.</li>
+                                {% endif %}
 
                                 <div class="text-center">
-                                    <a href="#" style="padding-top:10px; color:#9600b3; text-transform: uppercase;">
+                                    <a href="/mynotification/all" style="padding-top:10px; color:#9600b3; text-transform: uppercase;">
                                         <b style="font-family: 'Open Sans';">Show All Activities</b>
                                     </a>
                                 </div>

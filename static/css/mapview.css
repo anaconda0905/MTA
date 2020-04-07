@@ -1,0 +1,97 @@
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: white;
+    color: #333;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+    opacity: 0.8;
+}
+.leaflet-container .add-btn{
+    width: 100%;
+    color:black;
+    border-radius: 5px;
+    font-family: "open sans";
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+
+.leaflet-container a:hover{
+    background: #9600b3;
+}
+
+.leaflet-container img{
+    max-height: 35px;
+    max-width: 35px;
+}
+.mapview {
+    left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+    background: white;
+    width: 100%;
+    margin-top: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+    min-width: 180px;
+}
+
+.container {
+    max-width: 1100px;
+    position: relative;
+    margin: auto;
+}
+
+.slideshow {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.22);
+
+}
+
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    padding: 10px;
+    color: white;
+    border-radius: 3px;
+    font-size: 16px;
+    top: 45%;
+}
+
+.next {
+    right: 15px;
+}
+
+.prev:hover,
+.next:hover {
+    color: black;
+    background-color: white;
+}
+
+h3 {
+    margin-top: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+    .prev,
+    .next {
+        font-size: 12px;
+        top: 40%;
+    }
+}
+
+@media only screen and (max-width: 200px) {
+    .prev,
+    .next {
+        font-size: 9px;
+        top: 30%;
+    }
+}
+
+.bump {
+    animation: bump 200ms;
+}
+
+@keyframes bump {
+    30% {
+        transform: scale(1.2);
+    }
+}

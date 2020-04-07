@@ -38,87 +38,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script>
         var images = ["https://www.w3schools.com/howto/img_nature_wide.jpg", "https://www.w3schools.com/howto/img_snow_wide.jpg", "https://www.w3schools.com/howto/img_mountains_wide.jpg"];
-
     </script>
-    {% block css %}
-        <style>
-        .mapview {
-            left: 50%;
-            transform: translateX(-50%);
-            position: relative;
-            background: white;
-            width: 100%;
-            margin-top: 35px;
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-            border-radius: 5px;
-            min-width: 180px;
-        }
+    <link rel="stylesheet" href="{% static 'css/mapview.css' %}">
 
-        .container {
-            max-width: 1100px;
-            position: relative;
-            margin: auto;
-        }
-
-        .slideshow {
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.22);
-
-        }
-
-        .prev,
-        .next {
-            cursor: pointer;
-            position: absolute;
-            padding: 10px;
-            color: white;
-            border-radius: 3px;
-            font-size: 16px;
-            top: 45%;
-        }
-
-        .next {
-            right: 15px;
-        }
-
-        .prev:hover,
-        .next:hover {
-            color: black;
-            background-color: white;
-        }
-
-        h3 {
-            margin-top: 10px;
-        }
-
-        @media only screen and (max-width: 500px) {
-            .prev,
-            .next {
-                font-size: 12px;
-                top: 40%;
-            }
-        }
-
-        @media only screen and (max-width: 200px) {
-            .prev,
-            .next {
-                font-size: 9px;
-                top: 30%;
-            }
-        }
-
-        .bump {
-            animation: bump 200ms;
-        }
-
-        @keyframes bump {
-            30% {
-                transform: scale(1.2);
-            }
-        }
-
-        </style>
-
-    {% endblock css %}
 {% endblock %}
 
 {% block content %}
@@ -257,10 +179,11 @@
 				</div>
 
                 <div class="mapview">
-                    <div id="googleMap" style="height: 530px;">
+                    <div id="googleMap" style="height: 570px;">
 
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -324,6 +247,8 @@
         }).on('click', markerOnClick)
             .addTo(map);
         {% endfor %}
+
+
 
         function markerOnClick(e) {
             myvar = this.options.data;
@@ -439,6 +364,43 @@
             var postid = $(this).parent().parent().find('.postClass').val();
             window.location.href = "/posts/"+postid+"/reply";
         });
+
+        var addIcon = L.icon({
+					iconUrl: "/static/img/add-marker.png", // the url of the img
+					iconSize: [40, 40],
+					iconAnchor: [20, 40] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
+				});
+        var rememberLat = -3.141916;
+        var rememberLong = 174.82082;
+        var marker = L.marker([rememberLat, rememberLong], {
+            draggable: true, icon:addIcon
+        }).addTo(map);
+        marker.on('dragend', function (e) {
+            updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+        });
+        map.on('click', function (e) {
+            marker.setLatLng(e.latlng);
+            updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+        });
+
+        function updateLatLng(lat, lng, reverse) {
+            if (reverse) {
+                marker.setLatLng([lat, lng]);
+                map.panTo([lat, lng]);
+            } else {
+                $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + marker.getLatLng().lat + '&lon=' + marker.getLatLng().lng, function (data) {
+                    {#console.log(data.address.road);#}
+                });
+
+                marker.bindPopup('<div class="d-flex">' +
+                    '<a class="add-btn" href="">Create a new feedback</a>' +
+                    '<img src="/static/img/icons-create-purple.png">' +
+                    '<a class="add-btn" href="">Create a new route</a>' +
+                    '</div>');
+                {#marker.openPopup();#}
+                map.panTo([lat, lng]);
+            }
+        }
 
     </script>
     <script>

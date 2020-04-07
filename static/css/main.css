@@ -1702,6 +1702,7 @@ h6 {
   background: #fff;
   line-height: 24px;
   border-radius: 25px;
+  font-family: "Open Sans";
   border: 1px solid #9600b3;
   color: #9600b3;
   display: inline-block;
@@ -1712,7 +1713,8 @@ h6 {
   position: relative; }
   .sign-in-btn:hover {
     background: #9600b3;
-    color: #fff; }
+    color: #fff;
+    font-family: "Open Sans"; }
 
 .show-for-sr {
   background: #9600b3;
@@ -2999,7 +3001,8 @@ body {
   height: 75px;
   transition: all 0.5s;
   z-index: 997;
-  background: #fff; }
+  background: #fff;
+  box-shadow: 0px 2px 10px 0px #e17af6; }
 
 #header.header-scrolled {
   background: rgba(255, 255, 255, 0.8);
@@ -3183,12 +3186,18 @@ body {
 .nav-menu ul ul {
   margin: 0; }
 
-.nav-menu ul li img {
+.nav-menu ul li .nick-name {
   border-radius: 50%;
-  margin: auto;
-  display: inline-block;
+  margin: 10px 5px 0px 2px;
+  color: white;
   width: 25px;
-  margin: 10px 5px 0px 2px; }
+  height: 25px;
+  background-color: #9600b3;
+  text-align: center;
+  display: inline;
+  float: left;
+  margin-top: 8px;
+  text-transform: uppercase; }
 
 .nav-menu .scroll-div {
   overflow: auto;
@@ -3285,7 +3294,7 @@ body {
   color: #fff; }
 
 #mobile-nav ul li li {
-  padding-left: 30px; }
+  padding-left: 15px; }
 
 #mobile-nav ul .menu-has-children i {
   position: absolute;
@@ -3295,26 +3304,54 @@ body {
   cursor: pointer;
   color: #000; }
 
+#mobile-nav .mark-all-notifications {
+  font-family: "Open Sans";
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #9600b3; }
+  #mobile-nav .mark-all-notifications i {
+    display: none; }
+
+#mobile-nav .scroll-div {
+  border: 1px solid white;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  border-radius: 7px;
+  max-height: 265px;
+  overflow: scroll; }
+
 #mobile-nav ul .menu-has-children i.fa-chevron-up {
   color: #9600b3; }
 
+#mobile-nav ul .menu-has-children .scroll-div li {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid white;
+  margin-left: 0px !important; }
 #mobile-nav ul .menu-has-children li {
   color: #000;
-  font-weight: bold;
-  padding-left: 50px;
-  padding-top: 5px;
-  padding-bottom: 5px; }
+  padding: 20px;
+  margin-left: 40px;
+  font-family: "Open Sans"; }
   #mobile-nav ul .menu-has-children li a {
     color: #000;
-    text-transform: uppercase !important;
     font-size: 15px;
     font-weight: normal;
     font-family: 'open sans';
-    padding-left: 8px;
-    line-height: 18px; }
-  #mobile-nav ul .menu-has-children li img {
+    line-height: 18px;
+    position: absolute; }
+  #mobile-nav ul .menu-has-children li .timesince {
+    display: inherit;
+    text-align: center; }
+  #mobile-nav ul .menu-has-children li .nick-name {
     border-radius: 50%;
-    max-height: 35px; }
+    margin: 10px 5px 0px 2px;
+    color: white;
+    width: 25px;
+    height: 25px;
+    background-color: #9600b3;
+    text-align: center;
+    text-transform: uppercase; }
   #mobile-nav ul .menu-has-children li p {
     margin-bottom: 0px; }
 
@@ -4551,19 +4588,17 @@ body.mobile-nav-active #mobile-nav-toggle {
     padding: 30px; }
   .mynotification-list .mark-all-notifications {
     font-family: "Open Sans";
-    color: #9600b3;
-    margin-left: 650px; }
-    @media (max-width: 420px) {
-      .mynotification-list .mark-all-notifications {
-        margin-left: 0px; } }
+    color: #9600b3; }
   .mynotification-list h2 {
     font-family: "Open Sans";
     padding: 20px; }
   .mynotification-list li {
+    border-radius: 10px;
     transition: 0.3s;
     font-family: "Open Sans";
     text-align: left;
-    margin: 13px; }
+    margin: 10px;
+    padding: 5px; }
     .mynotification-list li a {
       font-family: "Open Sans";
       padding: 5px 10px 10px 5px;
@@ -4577,17 +4612,22 @@ body.mobile-nav-active #mobile-nav-toggle {
       text-align: left;
       overflow: hidden;
       text-overflow: ellipsis; }
-    .mynotification-list li img {
-      border-radius: 50%;
-      margin: auto;
-      display: inline-block;
+    .mynotification-list li .nick-name {
+      color: white;
       width: 25px;
-      margin: 10px 5px 0px 2px; }
+      height: 25px;
+      background-color: #9600b3;
+      border-radius: 50%;
+      text-align: center;
+      display: inline;
+      float: left;
+      margin-top: 8px;
+      text-transform: uppercase; }
     .mynotification-list li .timesince {
-      margin-top: -21px;
+      margin-top: -20px;
       position: absolute;
       text-align: left;
-      margin-left: 40px;
+      margin-left: 10px;
       font-family: "Open Sans";
       font-weight: inherit;
       font-size: 10px;

@@ -71,6 +71,7 @@
     transition: all 0.5s;
     z-index: 997;
     background: $white;
+    box-shadow: 0px 2px 10px 0px #e17af6;
 }
 
 #header.header-scrolled {
@@ -315,12 +316,20 @@
     margin: 0;
 }
 
-.nav-menu ul li img{
+.nav-menu ul li .nick-name {
     border-radius: 50%;
-    margin: auto;
-    display: inline-block;
-    width: 25px;
+
     margin: 10px 5px 0px 2px;
+    color: white;
+    width: 25px;
+    height: 25px;
+    background-color: $primary-color;
+
+    text-align: center;
+    display: inline;
+    float: left;
+    margin-top: 8px;
+    text-transform: uppercase;
 }
 
 .nav-menu .scroll-div{
@@ -458,7 +467,7 @@
 }
 
 #mobile-nav ul li li {
-    padding-left: 30px;
+    padding-left: 15px;
 }
 
 
@@ -472,35 +481,69 @@
     color: #000;
 }
 
+#mobile-nav .mark-all-notifications{
+    font-family: "Open Sans";
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $primary-color;
+    i{
+        display: none;
+    }
+}
 
-
+#mobile-nav .scroll-div{
+    border: 1px solid white;
+    box-shadow: 3px 3px rgba(0,0,0,0.3);
+    margin: 10px;
+    border-radius: 7px;
+    max-height: 265px;
+    overflow: scroll;
+}
 
 #mobile-nav ul .menu-has-children i.fa-chevron-up {
     color: $primary-color;
 }
 
 #mobile-nav ul .menu-has-children{
-
+    .scroll-div li{
+        padding-top: 3px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid white;
+        margin-left: 0px !important;
+    }
     li{
         color: $black;
-        font-weight: bold;
-        padding-left: 50px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        padding: 20px;
+        margin-left: 40px;
+        font-family: "Open Sans";
+
         a{
             color: #000;
-            text-transform: uppercase !important;
             font-size: 15px;
             font-weight: normal;
             font-family: 'open sans';
-            padding-left: 8px;
             line-height: 18px;
+            position: absolute;
         }
 
-        img{
+        .timesince{
+            display: inherit;
+            text-align: center;
+        }
+
+        .nick-name{
             border-radius: 50%;
-            max-height: 35px;
-        }       
+            margin: 10px 5px 0px 2px;
+            color: white;
+            width: 25px;
+            height: 25px;
+            background-color: $primary-color;
+
+            text-align: center;
+
+            text-transform: uppercase;
+
+        }
         p{
             margin-bottom: 0px;
         }

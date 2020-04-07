@@ -22,10 +22,17 @@
 		<div class="container box_1170">
 
             <ul class="mynotification-list">
-                <div class="d-flex">
-                <h2>My notifications</h2>
-                <button class="mark-all-notifications" data-mark-action="read" onclick="window.location.reload();">Mark all as read <i class="fa fa-bell-slash-o"></i>&nbsp;</button>
+                <div class="row">
+                    <div class="col-lg-10 col-md-9 col-8">
+                        <h2>My notifications</h2>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-4" style="margin: auto;">
+                        <button class="mark-all-notifications" data-mark-action="read" onclick="window.location.reload();">
+                            Mark all as read <i class="fa fa-bell-slash-o"></i>&nbsp;
+                        </button>
+                    </div>
                 </div>
+
                 {% render_notifications using user.notifications.active for box %}
             </ul>
         </div>
