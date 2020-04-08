@@ -112,7 +112,7 @@
       },
 
       onStepChanged: function (event, currentIndex, priorIndex){
-          if(currentIndex == 3 && mapContainerFlag == false){
+          if(currentIndex == 4 && mapContainerFlag == false){
               mapContainerFlag = true;
               mapShow();
           }
@@ -272,9 +272,9 @@
     }
 
     var myIcon = L.icon({
-					iconUrl: "/static/images/add.png", // the url of the img
+					iconUrl: "/static/img/add-marker.png", // the url of the img
 					iconSize: [40, 40],
-					iconAnchor: [20, 20] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
+					iconAnchor: [20, 40] // the coordinates of the &amp;amp;quot;tip&amp;amp;quot; of the icon ( in this case must be ( icon width/ 2, icon height )
 				});
 
     var marker = L.marker([rememberLat, rememberLong], {

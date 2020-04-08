@@ -374,7 +374,12 @@
         var rememberLong = 174.82082;
         var marker = L.marker([rememberLat, rememberLong], {
             draggable: true, icon:addIcon
-        }).addTo(map);
+        }).on('click', markerOnClicked).addTo(map);
+
+        function markerOnClicked(e){
+            console.log(e.latlng);
+
+        }
         marker.on('dragend', function (e) {
             updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
         });
@@ -388,14 +393,13 @@
                 marker.setLatLng([lat, lng]);
                 map.panTo([lat, lng]);
             } else {
-                $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + marker.getLatLng().lat + '&lon=' + marker.getLatLng().lng, function (data) {
-                    {#console.log(data.address.road);#}
-                });
+
 
                 marker.bindPopup('<div class="d-flex">' +
-                    '<a class="add-btn" href="">Create a new feedback</a>' +
+                    '<a class="add-btn" href="/feedback/?lat='+marker.getLatLng().lat+'&lon='+marker.getLatLng().lng+
+                    '">Create a new feedback</a>' +
                     '<img src="/static/img/icons-create-purple.png">' +
-                    '<a class="add-btn" href="">Create a new route</a>' +
+                    '<a class="add-btn" href="/home">Create a new route</a>' +
                     '</div>');
                 {#marker.openPopup();#}
                 map.panTo([lat, lng]);

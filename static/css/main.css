@@ -3498,8 +3498,9 @@ body.mobile-nav-active #mobile-nav-toggle {
     .single-post-item .post-header .nick-name {
       border-radius: 50%;
       background-color: #9700b2;
-      padding: 1px 5px;
-      margin-top: -1px; }
+      width: 25px;
+      height: 25px;
+      text-align: center; }
     .single-post-item .post-header label {
       color: #fff; }
   .single-post-item .post-footer {
@@ -4824,13 +4825,14 @@ body.mobile-nav-active #mobile-nav-toggle {
   width: 100%;
   border-radius: 10px;
   text-align: left;
-  padding: 40px 0px; }
+  padding: 50px 50px; }
   @media (max-width: 420px) {
     .content .feedback-regarding, .content .incident-regarding {
       width: 90%;
       padding: 25px 0px; } }
   @media (min-width: 420px) and (max-width: 768px) {
     .content .feedback-regarding, .content .incident-regarding {
+      width: 90%;
       width: 90%;
       padding: 25px 0px; } }
   .content .feedback-regarding .wrap-input200, .content .incident-regarding .wrap-input200 {

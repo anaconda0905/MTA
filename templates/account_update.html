@@ -76,16 +76,9 @@
                                 <div class="post-header justify-content-between d-flex flex-row">
                                     <div>
                                         <label class="nick-name">
-                                            {% with user.profile.fullname|split:" " as names %}
-                                                {% if names|length == 1 %}
-                                                    {{ user.profile.fullname|make_list|first }}{% filter upper %}{{ user.profile.fullname|make_list|last }}{% endfilter %}
-                                                {% else %}
-                                                    {% for name in names %}
-                                                        {{ name|make_list|first }}
-                                                    {% endfor %}
-                                                {% endif %}
-                                            {% endwith %}
-
+                                            {% filter upper %}
+                                                {{ user.username|make_list|first }}
+                                            {% endfilter %}
                                         </label>
                                         <label>@{{ adata.starter }}</label>
                                     </div>

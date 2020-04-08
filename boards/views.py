@@ -84,8 +84,11 @@ class CommentListView(ListView):
         queryset = self.post.comments.order_by('created_at')
         return queryset
 
-@login_required
 def review(request):
+    return render(request, 'review.html')
+
+@login_required
+def feedback(request):
     if request.method == 'POST':
 
         feeling = request.POST.get('feeling')
@@ -171,7 +174,10 @@ def review(request):
                         "files":files,
                     })
 
-    return render(request, 'review.html')
+    if request.GET.get('lat'):
+        return render(request, 'feedback_map.html', {'lat':request.GET.get('lat'), 'lon':request.GET.get('lon')})
+    else:
+        return render(request, 'feedback.html')
 
 @login_required
 def new_topic(request, pk):

@@ -14,7 +14,7 @@
     text-align: center;
 }
 
-.leaflet-container a:hover{
+.leaflet-container .add-btn:hover{
     background: #9600b3;
 }
 
